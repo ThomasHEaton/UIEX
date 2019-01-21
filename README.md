@@ -147,6 +147,8 @@ The following documentation assumes you have a little bit of familiarity with c#
 
 ## Classes
 
+Collectively the following class will be refered to as the `RedOwlClasses` for purposes of understanding what features only work within these classes
+
 ### RedOwlVisualElement (Gold)
 
 This is an abstract base class that derives from `VisualElement` and takes care of all the boiler plate for UIElements - The class is so stupidly simple that i'm going to link it here for you to go read, trust me its really short [so go read it](https://github.com/rocktavious/UIEX/blob/master/Assets/RedOwl/Editor/UIEX/RedOwlVisualElement.cs)
@@ -171,11 +173,23 @@ NOT FOR USE YET - this class is intended to be the inspector class to build cust
 
 ## Attributes
 
-These attributes can be used on or in RedOwl editor subclasses to have the editor perform common operations such as loading UXML, attaching USS files, add USS class names to the root element, etc etc
+These attributes can be used on or in `RedOwlClasses` to have them perform common operations such as loading UXML, attaching USS files, adding USS class names to the root element, etc etc
 
 ### UXML
 
-Place this attribute on any RedOwl editor class and it will load the UXML file - if the path given is blank it will build a path from the classes namespace and class name
+Place this attribute on any `RedOwlClasses` and it will load the UXML file
+
+```cs
+namespace RedOwl.Demo
+{
+    [UXML("RedOwl/Demo")]
+    public class DemoElement : RedOwlVisualElement {}
+}
+```
+
+Would load the UXML file `Resources/RedOwl/Demo.uss`
+
+If the path given is blank it will build a path from the classes namespace and class name with a suffix of `Layout`
 
 ```cs
 namespace RedOwl.Demo
@@ -185,11 +199,13 @@ namespace RedOwl.Demo
 }
 ```
 
-Will load the UXML file `Resources/RedOwl/Demo/DemoElementLayout.uxml`
+Would load the UXML file `Resources/RedOwl/Demo/DemoElementLayout.uxml`
 
 ### UXMLReference
 
-Use this attribute on fields of a RedOwl editor class and it will populate the field with the object from the UXML file loaded using the query system - if the name given is blank it will use the fields name to query for the element within the UXML
+Use this attribute on `RedOwlClasses` fields and it will populate the field with the object loaded from the UXML file using the query system
+
+Optionally if the name given is blank it will use the fields name to query for the element within the loaded UXML
 
 ```cs
 namespace RedOwl.Demo
@@ -202,6 +218,9 @@ namespace RedOwl.Demo
 
         [UXMLReference("SideBar")]
         VisualElement Navigation;
+
+        [UXMLReference]
+        TextureCanvas Canvas;
     }
 }
 ```
@@ -210,10 +229,11 @@ With the below UXML these `DemoElement` fields would be populated with reference
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<UXML xmlns="UnityEngine.Experimental.UIElements">
+<UXML xmlns="UnityEngine.Experimental.UIElements" xmlns:ro="RedOwl.Editor">
     <VisualElement name="Content">
         <VisualElement name="SideBar" />
     </VisualElement>
+    <ro:TextureCanvas name="Canvas" />
 </UXML>
 ```
 
@@ -221,7 +241,9 @@ NOTE: the type of the field is taken into consideration and an error will be thr
 
 ### USS
 
-Place any number of these attributes on any RedOwl editor class and it will load the USS file - if the path given is blank it will build a path from the classes namespace and class name
+Place any number of these attributes on `RedOwlClasses` and it will load the USS file
+
+Optionally if the path given is blank it will build a path from the classes namespace and class name with the suffix `Style`
 
 ```cs
 namespace RedOwl.Demo
@@ -231,11 +253,11 @@ namespace RedOwl.Demo
 }
 ```
 
-Will load the USS file `Resources/RedOwl/Demo/DemoElementStyle.uss` and `Resources/RedOwl/Styles.uss`
+Would load and attach the USS files `Resources/RedOwl/Demo/DemoElementStyle.uss` and `Resources/RedOwl/Styles.uss`
 
 ### USSClass
 
-Place any number of these attributes on any RedOwl editor class and it will add a USS class to this element
+Place any number of these attributes on `RedOwlClasses` and it will add a USS class to this element
 
 ```cs
 namespace RedOwl.Demo
@@ -252,7 +274,7 @@ The attributes are inherited so the resulting classes on `DemoElement2` would be
 
 ### UICallback
 
-Use this attribute to automatically schedule functions for callback within your RedOwl editor class at certain intervals
+Use this attribute on `RedOwlClasses` methods to automatically schedule for callback at certain intervals
 
 ```cs
 namespace RedOwl.Demo
@@ -260,10 +282,10 @@ namespace RedOwl.Demo
     public class DemoElement : RedOwlVisualElement
     {
         [UICallback(1, true)]
-        void DoSomethingOnce() { Debug.Log("Will only be called once after 1ms!"); }
+        void InitializeUI() { Debug.Log("Will only be called once after a 1ms delay!"); }
 
         [UICallback(100)]
-        void DoSomethingForever() { Debug.Log("Will be called every 100ms!"); }
+        void UpdateUI() { Debug.Log("Will be called every 100ms!"); }
     }
 }
 ```
@@ -272,17 +294,19 @@ The first function's attribute is given a "true" argument which tells the system
 
 ## Manipulators
 
-The manipulators system has been slightly reworked to allow for more easily defining callbacks within your RedOwl editor class without having to write your own manipulator class - this gets you back closer to how IMGUI worked while still retaining the UI Event bubbling improvements of UIElements
+The manipulators system has been generalized to allow for more easily defining callbacks within your `RedOwlClasses` without having to write your own manipulator class - this gets you back closer to how IMGUI worked while still retaining the UI Event bubbling improvements of UIElements
 
-The core of the Mouse and Keyboard manipulators is that they've been written to be generic and take "config" structs which help them decide where to send the events too
+The core of the Mouse and Keyboard manipulators is that they've been written to be generic by takeing "config" structs which help them decide where to send the events too
 
 The interfaces you have to implement help the RedOwl editor class know that it should hook up a manipulator into the system and then ask for your filter "config" structs
 
 Some of the callback methods have extra data which is generally useful when working with that kind of input event - such as the MouseFilters.OnMove callback gives you a delta of the mouse movement between callbacks, but all of the callback methods also passthrough the original event if you want to get at other properites or methods defined on that type of event - IE `evt.StopPropagation()`
 
+#### NOTE: while the manipulators will automatically hook themseleves up inside `RedOwlClasses` this does not mean you cannot use these manipulators with other UIElements classes.  You could still apply this manipulators to non `RedOwlClasses` and feed them the "config" structs and they would still work properly, you just don't need to implement the interfaces
+
 ### RedOwlMouseManipulator
 
-To enable this manipulator on your RedOwl editor class you have to implement an interface
+To enable this manipulator on your `RedOwlClasses` you have to implement an interface
 
 ```cs
 [UXML]
@@ -326,7 +350,7 @@ public class DemoElement : RedOwlVisualElement, IOnMouse
 }
 ```
 
-The above shows an example of implementing the IOnMouse interface and giving it 2 "config" structures which map to the same function on the class - this means you can hookup multiple ways to callback into your code from the input system.  The manipulator system is written to properly detect and filter the input based on the "configs" provided so that your classes function is guaranteed to only called when those filters are true.
+The above shows an example of implementing the IOnMouse interface and giving it 2 "config" structures which map to the same function on the class - this means you can hookup multiple ways to callback into your code from the input system.  The manipulator system is written to properly detect and filter the input based on the "configs" provided so that your classes function is guaranteed to only be called when those filters are true.
 
 ### RedOwlKeyboardManipulator
 
@@ -397,10 +421,14 @@ public class DemoElement : RedOwlVisualElement, IOnZoom
 }
 ```
 
+#### NOTE: the `RedOwlWheelManipulator` currently will not work on non `RedOwlClasses`
+
 ## Custom Elements
 
-### TextureCanvas
+TBD
 
-### PathPicker
+### TextureCanvas (Alpha)
 
-### FloatSlider / IntSlider
+### PathPicker (Alpha)
+
+### FloatSlider / IntSlider (Beta)
