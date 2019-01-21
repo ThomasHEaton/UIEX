@@ -181,7 +181,7 @@ namespace RedOwl.Demo
     {
         [UXMLReference]
         VisualElement Content;
-        
+
         [UXMLReference("SideBar")]
         VisualElement Navigation;
     }
@@ -243,7 +243,7 @@ namespace RedOwl.Demo
     {
         [UICallback(1, true)]
         void DoSomethingOnce() { Debug.Log("Will only be called once after 1ms!"); }
-        
+
         [UICallback(100)]
         void DoSomethingForever() { Debug.Log("Will be called every 100ms!"); }
     }
@@ -270,8 +270,8 @@ To enable this manipulator on your RedOwl editor class you have to implement an 
 [UXML]
 public class DemoElement : RedOwlVisualElement, IOnMouse
 {
-	[UXMLReference]
-	VisualElement frame;
+    [UXMLReference]
+    VisualElement frame;
 	
     public IEnumerable<MouseFilter> MouseFilters {
         get {
@@ -317,29 +317,29 @@ The keyboard filter works much like the mouse filter just with a different inter
 ```cs
 public class DemoElement : RedOwlVisualElement, IOnKeyboard
 {
-	public IEnumerable<KeyboardFilter> KeyboardFilters {
-		get {
-			yield return new KeyboardFilter {
-				key = KeyCode.F,
-				OnDown = OnKeyDown
-			};
-			yield return new KeyboardFilter {
-				key = KeyCode.G,
+    public IEnumerable<KeyboardFilter> KeyboardFilters {
+        get {
+            yield return new KeyboardFilter {
+                key = KeyCode.F,
+                OnDown = OnKeyDown
+            };
+            yield return new KeyboardFilter {
+                key = KeyCode.G,
                 OnUp = OnKeyUp
-			};
-		}
-	}
-	
-	void OnKeyDown(KeyDownEvent evt)
-	{
-		Debug.Log("This will get called when the F key is pressed down or held down");
+            };
+        }
+    }
+
+    void OnKeyDown(KeyDownEvent evt)
+    {
+        Debug.Log("This will get called when the F key is pressed down or held down");
         evt.StopPropagation();
-	}
+    }
 
     void OnKeyUp(KeyUpEvent evt)
-	{
-		Debug.Log("This will get called when the G key is released");
-	}
+    {
+        Debug.Log("This will get called when the G key is released");
+    }
 }
 ```
 
@@ -350,10 +350,10 @@ The wheel manipulator is slightly different then the previous 2 because there is
 ```cs
 public class DemoElement : RedOwlVisualElement, IOnWheel
 {
-	public void OnWheel(WheelEvent evt, int wheelDelta)
-	{
-		Debug.Log($"The wheel moved: {wheelDelta}")
-	}
+    public void OnWheel(WheelEvent evt, int wheelDelta)
+    {
+        Debug.Log($"The wheel moved: {wheelDelta}")
+    }
 }
 ```
 
@@ -365,17 +365,17 @@ There is also another variation of the wheel manipulator callback that is specif
 [UXML]
 public class DemoElement : RedOwlVisualElement, IOnZoom
 {
-	[UXMLReference]
-	VisualElement frame;
-	
-	public float zoomMinScale { get { return 0.2f; } }
-	public float zoomMaxScale { get { return 15f; } }
-	public float zoomScaleStep { get { return 0.15f; } }
-	public EventModifiers zoomActivationModifiers { get { return EventModifiers.None; } }		
-	public void OnZoom(WheelEvent evt, Vector3 scale)
-	{
-		frame.transform.scale = scale;
-	}
+    [UXMLReference]
+    VisualElement frame;
+
+    public float zoomMinScale { get { return 0.2f; } }
+    public float zoomMaxScale { get { return 15f; } }
+    public float zoomScaleStep { get { return 0.15f; } }
+    public EventModifiers zoomActivationModifiers { get { return EventModifiers.None; } }		
+    public void OnZoom(WheelEvent evt, Vector3 scale)
+    {
+        frame.transform.scale = scale;
+    }
 }
 ```
 
