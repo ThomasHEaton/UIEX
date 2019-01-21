@@ -190,9 +190,6 @@ NOT FOR USE YET - this class is intended to be the inspector class to build cust
 
 These attributes can be used on or in `RedOwlClasses` to have them perform common operations such as loading UXML, attaching USS files, adding USS class names to the root element, etc etc
 
-<details>
-  <summary>Attributes Documenation</summary><p>
-
 ### UXML
 
 Place this attribute on any `RedOwlClasses` and it will load the UXML file
@@ -310,8 +307,6 @@ namespace RedOwl.Demo
 
 The first function's attribute is given a "true" argument which tells the system to only schedule the callback once after the delay given
 
-</p></details>
-
 ## Manipulators
 
 The manipulators system has been generalized to allow for more easily defining callbacks within your `RedOwlClasses` without having to write your own manipulator class - this gets you back closer to how IMGUI worked while still retaining the UI Event bubbling improvements of UIElements
@@ -323,9 +318,6 @@ The interfaces you have to implement help the RedOwl editor class know that it s
 Some of the callback methods have extra data which is generally useful when working with that kind of input event - such as the MouseFilters.OnMove callback gives you a delta of the mouse movement between callbacks, but all of the callback methods also passthrough the original event if you want to get at other properites or methods defined on that type of event - IE `evt.StopPropagation()`
 
 #### NOTE: while the manipulators will automatically hook themseleves up inside `RedOwlClasses` this does not mean you cannot use these manipulators with other UIElements classes.  You could still apply this manipulators to non `RedOwlClasses` and feed them the "config" structs and they would still work properly, you just don't need to implement the interfaces
-
-<details>
-  <summary>Manipulators Documenation</summary><p>
 
 ### RedOwlMouseManipulator
 
@@ -445,8 +437,6 @@ public class DemoElement : RedOwlVisualElement, IOnZoom
 ```
 
 #### NOTE: the `RedOwlWheelManipulator` currently will not work on non `RedOwlClasses`
-
-</p></details>
 
 ## Custom Elements
 
