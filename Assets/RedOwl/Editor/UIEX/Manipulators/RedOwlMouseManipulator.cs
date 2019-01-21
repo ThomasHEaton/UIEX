@@ -13,6 +13,12 @@ namespace RedOwl.Editor
 		IEnumerable<MouseFilter> MouseFilters { get; }
 	}
 	
+	public interface IOnMouseHover {
+		void OnMouseEnter(MouseEnterEvent evt);
+		void OnMouseHover(MouseMoveEvent evt);
+		void OnMouseLeave(MouseLeaveEvent evt);
+	}
+	
 	// I had to fork this code from unity because i wanted to have the filters control which callbacks are run in my custom manipulater setup
 	// Forked - https://github.com/Unity-Technologies/UnityCsReference/blob/2018.3/Modules/UIElements/ManipulatorActivationFilter.cs
 	// Forked - https://github.com/Unity-Technologies/UnityCsReference/blob/2018.3/Modules/UIElements/MouseManipulator.cs
@@ -26,17 +32,6 @@ namespace RedOwl.Editor
 		public Action<MouseMoveEvent, Vector2> OnMove;
 		public Action<MouseUpEvent> OnUp;
 		
-		public MouseFilter(MouseButton button, EventModifiers modifiers, Action<MouseDownEvent> OnDown, Action<MouseMoveEvent, Vector2> OnMove, Action<MouseUpEvent> OnUp, int clickCount)
-		{
-			this.button = button;
-			this.modifiers = modifiers;
-			this.clickCount = clickCount;
-			
-			this.OnDown = OnDown;
-			this.OnMove = OnMove;
-			this.OnUp = OnUp;
-		}
-
 		public bool Matches(IMouseEvent e)
 		{
 			// Default clickCount field value is 0 since we're in a struct -- this case is covered if the user
@@ -89,6 +84,14 @@ namespace RedOwl.Editor
 			target.RegisterCallback<MouseDownEvent>(OnMouseDown);
 			target.RegisterCallback<MouseMoveEvent>(OnMouseMove);
 			target.RegisterCallback<MouseUpEvent>(OnMouseUp);
+			
+			var hoverTarget = target as IOnMouseHover;
+			if (hoverTarget != null)
+			{
+				target.RegisterCallback<MouseEnterEvent>(hoverTarget.OnMouseEnter);
+				target.RegisterCallback<MouseMoveEvent>(hoverTarget.OnMouseHover);
+				target.RegisterCallback<MouseLeaveEvent>(hoverTarget.OnMouseLeave);
+			}
 		}
 
 		protected override void UnregisterCallbacksFromTarget()
@@ -96,6 +99,14 @@ namespace RedOwl.Editor
 			target.UnregisterCallback<MouseDownEvent>(OnMouseDown);
 			target.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
 			target.UnregisterCallback<MouseUpEvent>(OnMouseUp);
+			
+			var hoverTarget = target as IOnMouseHover;
+			if (hoverTarget != null)
+			{
+				target.UnregisterCallback<MouseEnterEvent>(hoverTarget.OnMouseEnter);
+				target.UnregisterCallback<MouseMoveEvent>(hoverTarget.OnMouseHover);
+				target.UnregisterCallback<MouseLeaveEvent>(hoverTarget.OnMouseLeave);
+			}
 		}
 		
 		protected void OnMouseDown(MouseDownEvent evt)
