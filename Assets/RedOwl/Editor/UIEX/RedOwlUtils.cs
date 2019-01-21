@@ -45,7 +45,7 @@ namespace RedOwl.Editor
 				var layout = Resources.Load<VisualTreeAsset>(path);
 				if (layout != null)
 				{
-					Debug.LogFormat("Loading '{0}.uxml' for '{1}'", path, instance.GetType().Name);
+					//Debug.LogFormat("Loading '{0}.uxml' for '{1}'", path, instance.GetType().Name);
 					layout.CloneTree(element, null);
 				}
 			}
@@ -56,7 +56,7 @@ namespace RedOwl.Editor
 			foreach (var attr in instance.GetType().GetCustomAttributes(typeof(USSAttribute), true))
 			{
 				string path = GetUSSPath(element, ((USSAttribute)attr).path);
-				Debug.LogFormat("Adding '{0}.uss' to '{1}'", path, instance.GetType().Name);
+				//Debug.LogFormat("Adding '{0}.uss' to '{1}'", path, instance.GetType().Name);
 				element.AddStyleSheetPath(path);
 			}
 		}
@@ -67,7 +67,7 @@ namespace RedOwl.Editor
 			{
 				foreach (var name in ((USSClassAttribute)attr).names)
 				{
-					Debug.LogFormat("Adding USSClass '{0}' to '{1}'", name, instance.GetType().Name);
+					//Debug.LogFormat("Adding USSClass '{0}' to '{1}'", name, instance.GetType().Name);
 					element.AddToClassList(name);
 				}
 			}
@@ -82,7 +82,7 @@ namespace RedOwl.Editor
 				{
 					string uxmlName = ((UXMLReferenceAttribute)attr).Name;
 					if (string.IsNullOrEmpty(uxmlName)) uxmlName = info.Name;
-					Debug.LogFormat("Populating 'UXMLReferenceAttribute' on '{0}.{1}' by looking for UXML name '{2}'", instance.GetType().Name, info.Name, uxmlName);
+					//Debug.LogFormat("Populating 'UXMLReferenceAttribute' on '{0}.{1}' by looking for UXML name '{2}'", instance.GetType().Name, info.Name, uxmlName);
 					info.SetValue(instance, element.Q(uxmlName));
 				}
 			}
@@ -93,20 +93,20 @@ namespace RedOwl.Editor
 			IOnMouse mouseHandler = instance as IOnMouse;
 			if (mouseHandler != null)
 			{
-				Debug.LogFormat("Adding 'MouseManipulator' to '{0}'", instance.GetType().Name);
+				//Debug.LogFormat("Adding 'MouseManipulator' to '{0}'", instance.GetType().Name);
 				element.AddManipulator(new RedOwlMouseManipulator(mouseHandler.MouseFilters.ToArray()));
 			}
 			IOnKeyboard keyboardHandler = instance as IOnKeyboard;
 			if (keyboardHandler != null)
 			{
-				Debug.LogFormat("Adding 'KeyboardManipulator' to '{0}'", instance.GetType().Name);
+				//Debug.LogFormat("Adding 'KeyboardManipulator' to '{0}'", instance.GetType().Name);
 				element.AddManipulator(new RedOwlKeyboardManipulator(keyboardHandler.KeyboardFilters.ToArray()));
 			}
 			IOnWheel wheelHandler = instance as IOnWheel;
 			IOnZoom zoomHandler = instance as IOnZoom;
 			if (wheelHandler != null || zoomHandler != null)
 			{
-				Debug.LogFormat("Adding 'WheelManipulator' to '{0}'", instance.GetType().Name);
+				//Debug.LogFormat("Adding 'WheelManipulator' to '{0}'", instance.GetType().Name);
 				element.AddManipulator(new RedOwlWheelManipulator());
 			}
 		}
@@ -119,7 +119,7 @@ namespace RedOwl.Editor
 				var item = info.GetCustomAttributes(typeof(UICallbackAttribute), false).FirstOrDefault();
 				if (item != null)
 				{
-					Debug.LogFormat("Registering 'UICallbackAttribute' on '{0}.{1}'", instance.GetType().Name, info.Name);
+					//Debug.LogFormat("Registering 'UICallbackAttribute' on '{0}.{1}'", instance.GetType().Name, info.Name);
 					attr = (UICallbackAttribute)item;
 					if (attr.OnlyOnce)
 					{
