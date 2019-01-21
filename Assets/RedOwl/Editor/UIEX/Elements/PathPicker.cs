@@ -20,10 +20,10 @@ namespace RedOwl.Editor
 	{		
 		public new class UxmlFactory : UxmlFactory<PathPicker> {}
 				
-		[UXMLReference("Path")]
+		[UXMLReference]
 		Label path;
 		
-		[UXMLReference("Button")]
+		[UXMLReference]
 		Button button;
 		
 		private PathPickerTypes PickerType;

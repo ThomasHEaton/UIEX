@@ -40,13 +40,13 @@ namespace RedOwl.Editor
 			}
 		}
 		
-		[UXMLReference("Label")]
+		[UXMLReference]
 		Label label;
 	    
-		[UXMLReference("Slider")]
+		[UXMLReference]
 		Slider slider;
 		
-		[UXMLReference("Field")]
+		[UXMLReference]
 		FloatField field;
 
 		private float _value;
