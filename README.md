@@ -273,33 +273,33 @@ public class DemoElement : RedOwlVisualElement, IOnMouse
 	[UXMLReference]
 	VisualElement frame;
 	
-	public IEnumerable<MouseFilter> MouseFilters {
-		get {
-			yield return new MouseFilter { 
-				button = MouseButton.LeftMouse,
+    public IEnumerable<MouseFilter> MouseFilters {
+        get {
+            yield return new MouseFilter { 
+                button = MouseButton.LeftMouse,
                 OnDown = OnMouseDown,
-				OnMove = OnPan,
+                OnMove = OnPan,
                 OnUp = OnMouseUp
-			};
-			yield return new MouseFilter { 
-				button = MouseButton.MiddleMouse,
-				modifiers = EventModifiers.Control,
-				OnMove = OnPan
-			};
-		}
-	}
+            };
+            yield return new MouseFilter { 
+                button = MouseButton.MiddleMouse,
+                modifiers = EventModifiers.Control,
+                OnMove = OnPan
+            };
+        }
+    }
 
     public void OnMouseDown(MouseDownEvent evt)
-	{
-		Debug.Log("Left Mouse Pressed")
+    {
+        Debug.Log("Left Mouse Pressed")
 	}
 	
-	public void OnPan(MouseMoveEvent evt, Vector2 delta)
-	{
+    public void OnPan(MouseMoveEvent evt, Vector2 delta)
+    {
         // Will happen for left mouse or right mouse + ctrl/cmd
-		Vector3 current = frame.transform.position;
-		frame.transform.position = new Vector3(current.x + delta.x, current.y + delta.y, -100f);
-	}
+        Vector3 current = frame.transform.position;
+        frame.transform.position = new Vector3(current.x + delta.x, current.y + delta.y, -100f);
+    }
 
     public void OnMouseUp(MouseDownEvent evt)
     {
