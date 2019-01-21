@@ -1,0 +1,113 @@
+The RedOwl UIElements library is a framework for writing UIElements editor code without lots boilerplate getting in the way.
+
+Alot of the common UIElements functionality has been bundled up into attributes that you annotate your classes, methods and fields with to interact with the UIElements systems.
+
+Here is a example EditorWindow that has mouse and input handling
+
+```cs
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+using UnityEngine.Experimental.UIElements;
+using RedOwl.Editor;
+
+[UXML, USS, USSClass("vertical", "fill")]
+public class Demo : RedOwlEditorWindow<Demo>, IOnKeyboard, IOnMouse
+{
+	[UXMLReference]
+	VisualElement Content;
+	
+	[UXMLReference("SideBar")]
+	VisualElement Navigation;
+	
+	[MenuItem("Tools/Demo")]
+	public static void Open()
+	{
+		EnsureWindow();
+	}
+	
+	public IEnumerable<MouseFilter> MouseFilters {
+		get {
+			yield return new MouseFilter { 
+				button = MouseButton.LeftMouse,
+				modifiers = EventModifiers.Control,
+				OnMove = OnMouseMove
+			};
+			yield return new MouseFilter { 
+				button = MouseButton.RightMouse,
+				modifiers = EventModifiers.None,
+				OnMove = OnMouseMove
+			};
+		}
+	}
+	
+	public IEnumerable<KeyboardFilter> KeyboardFilters {
+		get {
+			yield return new KeyboardFilter {
+				key = KeyCode.F,
+				OnDown = OnKeyDown
+			};
+		}
+	}
+	
+	void OnMouseMove(MouseMoveEvent evt, Vector2 delta)
+	{
+		Debug.Log(delta);
+	}
+	
+	void OnKeyDown(KeyDownEvent evt)
+	{
+		Debug.Log(evt.keyCode);
+	}
+}
+```
+
+Here a sample custom element that can pan and zoom
+
+```cs
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Experimental.UIElements;
+using RedOwl.Editor;
+
+[UXML]
+public class PanAndZoom : RedOwlVisualElement, IOnMouse, IOnZoom
+{
+	public new class UxmlFactory : UxmlFactory<PanAndZoom> {}
+	
+	[UXMLReference]
+	VisualElement frame;
+	
+	public IEnumerable<MouseFilter> MouseFilters {
+		get {
+			yield return new MouseFilter { 
+				button = MouseButton.LeftMouse,
+				modifiers = EventModifiers.Control,
+				OnMove = OnPan
+			};
+			yield return new MouseFilter { 
+				button = MouseButton.MiddleMouse,
+				modifiers = EventModifiers.None,
+				OnMove = OnPan
+			};
+		}
+	}
+	
+	public void OnPan(MouseMoveEvent evt, Vector2 delta)
+	{
+		Vector3 current = frame.transform.position;
+		frame.transform.position = new Vector3(current.x + delta.x, current.y + delta.y, -100f);
+	}
+	
+	public float zoomMinScale { get { return 0.2f; } }
+	public float zoomMaxScale { get { return 15f; } }
+	public float zoomScaleStep { get { return 0.15f; } }
+	public EventModifiers zoomActivationModifiers { get { return EventModifiers.Control; } }		
+	public void OnZoom(WheelEvent evt, Vector3 scale)
+	{
+		frame.transform.scale = scale;
+	}
+}
+```
+
+As well as letting you build your own UIElements windows and elements the library has also started building a set of elements itself that are missing from Unity's built in set of elements, things like TexturePreview, [Int/Float]Slider, [File/Folder]PathPicker, etc

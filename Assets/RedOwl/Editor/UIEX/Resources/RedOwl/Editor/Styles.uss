@@ -1,0 +1,65 @@
+* {
+    overflow: hidden;
+}
+
+.hide {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.horizontal {
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.property {
+    flex-direction: row;
+    align-content: flex-start;
+}
+
+.property > Label {
+    width: 100;
+}
+
+.vertical {
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    align-content: flex-start;
+}
+
+.fill {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+}
+
+.flexfill {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.centered {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.workspace {
+    background-color: rgb(40, 37, 34);
+    padding: 2px;
+}
+
+.seperator {
+    width: 2px;
+    background-color: rgb(20,20,20);
+}
+
+.float {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
