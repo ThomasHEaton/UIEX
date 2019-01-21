@@ -26,7 +26,7 @@ namespace RedOwl.Editor
 		
 	    public TextureCanvas() : base() {}
 	    
-	    [UICallback(true, 1)]
+	    [UICallback(1, true)]
 	    private void CreateUI()
 	    {
 	    	background = new IMGUIContainer(UpdateUI);

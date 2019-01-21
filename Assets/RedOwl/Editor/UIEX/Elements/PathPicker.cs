@@ -38,7 +38,7 @@ namespace RedOwl.Editor
 			PickerType = pickerType;
 		}
 		
-		[UICallback(true, 1)]
+		[UICallback(1, true)]
 		private void InitUI()
 		{
 			button.clickable.clicked += OpenPicker;

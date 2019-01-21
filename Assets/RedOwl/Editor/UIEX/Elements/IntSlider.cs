@@ -58,7 +58,7 @@ namespace RedOwl.Editor
 		
 		public IntSlider() : base() {}
 	    
-		[UICallback(true, 1)]
+		[UICallback(1, true)]
 		private void CreateUI()
 		{
 			label.style.width = label.text.Length * 8;
