@@ -135,11 +135,13 @@ The best method if you are using Unity > 2018.3 is via the new package manager.
 - Add the following line to the dependencies section `"com.redowl.editor.uiex": "https://github.com/rocktavious/UIEX.git",`
 - Open Unity and the package should download automatically
 
-If you are not using using Unity > 2018.3 - i'm sorry you are out of luck, UIElements is only useable in this version of unity or higher
+If you are not using using Unity < 2018.3 - i'm sorry you are out of luck, UIElements is only useable in this version of unity or higher
 
 # Current Features
 
 #### This section of the docs is still under heavy WIP
+
+The following documentation assume you have a little bit of familiarity with c# and Unity's new UI Elements system - if not go read about it [here](https://docs.unity3d.com/Manual/UIElements.html)
 
 ## Classes
 
@@ -174,6 +176,7 @@ Use this attribute on fields of a RedOwl editor class and it will populate the f
 ```cs
 namespace RedOwl.Demo
 {
+    [UXML]
     public class DemoElement : RedOwlVisualElement
     {
         [UXMLReference]
@@ -185,7 +188,7 @@ namespace RedOwl.Demo
 }
 ```
 
-With the below UXML these fields would be populated with references to them
+With the below UXML these `DemoElement` fields would be populated with references to the elements written in the UXML file
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -200,40 +203,45 @@ NOTE: the type of the field is taken into consideration and an error will be thr
 
 ### USS
 
-Place this attribute on any RedOwl editor class and it will load the USS file - if the path given is blank it will build a path from the classes namespace and class name
+Place any number of these attributes on any RedOwl editor class and it will load the USS file - if the path given is blank it will build a path from the classes namespace and class name
 
 ```cs
 namespace RedOwl.Demo
 {
-    [USS]
+    [USS, USS("RedOwl/Styles")]
     public class DemoElement : RedOwlVisualElement {}
 }
 ```
 
-Will load the USS file `Resources/RedOwl/Demo/DemoElementStyle.uss`
+Will load the USS file `Resources/RedOwl/Demo/DemoElementStyle.uss` and `Resources/RedOwl/Styles.uss`
 
 ### USSClass
 
-Place this attribute on any RedOwl editor class and it will add a USS class to this element
+Place any number of these attributes on any RedOwl editor class and it will add a USS class to this element
 
 ```cs
 namespace RedOwl.Demo
 {
-    [USSClass("vertical")]
+    [USSClass("vertical", "red")]
     public class DemoElement : RedOwlVisualElement {}
+
+    [USSClass("fill")]
+    public class DemoElement2 : DemoElement {}
 }
 ```
 
+The attributes are inherited so the resulting classes on `DemoElement2` would be `["vertical","red","fill"]`
+
 ### UICallback
 
-Use this attribute to schedule functions for callback within your RedOwl editor class at certain intervals automatically
+Use this attribute to automatically schedule functions for callback within your RedOwl editor class at certain intervals
 
 ```cs
 namespace RedOwl.Demo
 {
     public class DemoElement : RedOwlVisualElement
     {
-        [UICallback(true, 1)]
+        [UICallback(1, true)]
         void DoSomethingOnce() { Debug.Log("Will only be called once after 1ms!"); }
         
         [UICallback(100)]
@@ -242,15 +250,17 @@ namespace RedOwl.Demo
 }
 ```
 
+The first function's attribute is given a "true" argument which tells the system to only schedule the callback once after the delay given
+
 ## Manipulators
 
 The manipulators system has been slightly reworked to allow for more easily defining callbacks within your RedOwl editor class without having to write your own manipulator class - this gets you back closer to how IMGUI worked while still retaining the UI Event bubbling improvements of UIElements
 
 The core of the Mouse and Keyboard manipulators is that they've been written to be generic and take "config" structs which help them decide where to send the events too
 
-The interfaces you have to implement help the RedOwl editor class know that it should hook a manipulator into the system and then ask for your filter "config" structs
+The interfaces you have to implement help the RedOwl editor class know that it should hook up a manipulator into the system and then ask for your filter "config" structs
 
-All of the callback methods take the original event and some of the callback methods have extra data which is generally useful when working with that kind of input event - such as the MouseFilters.OnMove callback gives you a delta of the mouse movement between callbacks.
+Some of the callback methods have extra data which is generally useful when working with that kind of input event - such as the MouseFilters.OnMove callback gives you a delta of the mouse movement between callbacks, but all of the callback methods also passthrough the original event if you want to get at other properites or methods defined on that type of event - IE `evt.StopPropagation()`
 
 ### RedOwlMouseManipulator
 
@@ -267,30 +277,42 @@ public class DemoElement : RedOwlVisualElement, IOnMouse
 		get {
 			yield return new MouseFilter { 
 				button = MouseButton.LeftMouse,
-				modifiers = EventModifiers.Control,
-				OnMove = OnPan
+                OnDown = OnMouseDown,
+				OnMove = OnPan,
+                OnUp = OnMouseUp
 			};
 			yield return new MouseFilter { 
 				button = MouseButton.MiddleMouse,
-				modifiers = EventModifiers.None,
+				modifiers = EventModifiers.Control,
 				OnMove = OnPan
 			};
 		}
 	}
+
+    public void OnMouseDown(MouseDownEvent evt)
+	{
+		Debug.Log("Left Mouse Pressed")
+	}
 	
 	public void OnPan(MouseMoveEvent evt, Vector2 delta)
 	{
+        // Will happen for left mouse or right mouse + ctrl/cmd
 		Vector3 current = frame.transform.position;
 		frame.transform.position = new Vector3(current.x + delta.x, current.y + delta.y, -100f);
 	}
+
+    public void OnMouseUp(MouseDownEvent evt)
+    {
+        Debug.Log("Left Mouse Released");
+    }
 }
 ```
 
-The above shows an example of implementing the IOnMouse interface and giving it 2 "config" structures which map to the same function on the class - this means you can hookup multiple ways to callback into your code from the input system.
+The above shows an example of implementing the IOnMouse interface and giving it 2 "config" structures which map to the same function on the class - this means you can hookup multiple ways to callback into your code from the input system.  The manipulator system is written to properly detect and filter the input based on the "configs" provided so that your classes function is guaranteed to only called when those filters are true.
 
 ### RedOwlKeyboardManipulator
 
-The keyboard filter works much like the mouse filter just with a different interface
+The keyboard filter works much like the mouse filter just with a different interface and set of callbacks available
 
 ```cs
 public class DemoElement : RedOwlVisualElement, IOnKeyboard
@@ -301,12 +323,22 @@ public class DemoElement : RedOwlVisualElement, IOnKeyboard
 				key = KeyCode.F,
 				OnDown = OnKeyDown
 			};
+			yield return new KeyboardFilter {
+				key = KeyCode.G,
+                OnUp = OnKeyUp
+			};
 		}
 	}
 	
 	void OnKeyDown(KeyDownEvent evt)
 	{
 		Debug.Log("This will get called when the F key is pressed down or held down");
+        evt.StopPropagation();
+	}
+
+    void OnKeyUp(KeyUpEvent evt)
+	{
+		Debug.Log("This will get called when the G key is released");
 	}
 }
 ```
@@ -325,9 +357,9 @@ public class DemoElement : RedOwlVisualElement, IOnWheel
 }
 ```
 
-The `wheelDelta` data will be constrained to values 0, 1, or -1 to make building actions off this easier
+The `wheelDelta` data will be constrained to values `0`, `1`, or `-1` to make building actions off this easier
 
-There is also another variation of the wheel manipulator callback that is specifically designed for zooming actions because it provides you will a `scale` data that can be feed into UIElements transforms to scale them
+There is also another variation of the wheel manipulator callback that is specifically designed for zooming actions because it provides you with `scale` data that can be feed directly into the UIElements transforms to scale (or zoom) them in and out
 
 ```cs
 [UXML]

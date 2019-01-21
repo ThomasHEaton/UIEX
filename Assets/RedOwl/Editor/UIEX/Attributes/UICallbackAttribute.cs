@@ -8,16 +8,10 @@ namespace RedOwl.Editor
 		public readonly bool OnlyOnce;
 		public readonly long Interval;
 		
-		public UICallbackAttribute(long interval = 100)
-		{
-			OnlyOnce = false;
-			Interval = interval;
-		}
-		
-		public UICallbackAttribute(bool once, long delay = 100)
+		public UICallbackAttribute(long interval = 100, bool once = false)
 		{
 			OnlyOnce = once;
-			Interval = delay;
+			Interval = interval;
 		}
 	}
 }
