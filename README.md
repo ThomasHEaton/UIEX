@@ -3,7 +3,7 @@
 
 
 <p align="center">
-    <a href="#how-it-works">How it works?</a> •
+    <a href="#what-it-looks-like">What it looks like?</a> •
     <a href="#installation">How to get it?</a> •
     <a href="#current-features">Features</a>
 </p>
@@ -15,7 +15,9 @@
 * Provide a set of base classes which remove alot of general editor scripting boilerplate
 * A library of UIElement elements that are missing from the built in set of elements
 
-# How it works?
+#### NOTE: This is a library for coders to help them make unity UI's easier when using UIElements, if you are looking for something a little more friendly i suggest you check out (Odin)[https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041]
+
+# What it looks like?
 
 Here is a example EditorWindow that has mouse and input handling and shows off a number of features
 
