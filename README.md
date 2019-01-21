@@ -14,16 +14,16 @@
 
 # Key Features
 
-* Turn common UIElements functions for loading UXML and USS into attributes to make it trivial to use them
-* Provide a better framework for hooking up input tracking without the hassel of writing manipulators
+* Reduce boilerplate code in every class when working with UXML and USS by leveraging c# attributes
+* Provide a better framework for input handleing without the hassel of writing custom manipulators
 * Provide a set of base classes which remove alot of general editor scripting boilerplate
-* A library of UIElement elements that are missing from the built in set of elements
+* Act as a library of missing controls from the built in set of controls - TexturePreview, PathPicker, etc
 
 #### NOTE: This is a library for coders to help them make unity UI's easier when using UIElements, if you are looking for something a little more friendly i suggest you check out [Odin](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
 
 # What it looks like?
 
-Here is a example EditorWindow that has mouse and input handling and shows off a number of features
+Here is a example EditorWindow that has mouse and input handling and shows off a number of features - if you'd like a breakdown of each feature checkout the documentation section
 
 ```cs
 using System.Collections.Generic;
