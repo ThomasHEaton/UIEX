@@ -161,6 +161,10 @@ But even still its pretty crazy how simple it is.  This code has eliminated a TO
 
 NOT FOR USE YET - this class in intended to be the editor class for inline field and property inspectors
 
+### RedOwlAssetEditor (Alpha)
+
+This class is inteded to provide some Quality of Life improvements when writing an editor window which is to provide as the editor for for scriptable objects - this editor window maybe eventually be merged with RedOwlEditorWindow - i'm not sure yet - as it will sort of overlap in functionality with RedOwlEditorWindow and RedOwlInspector - not ready for use yet
+
 ### RedOwlEditorWindow (Beta)
 
 This class bring together the RedOwlUtils functions into a Unity EditorWindow class that builds its UI using UIElements.  This class is still under heavy development so i won't document it here yet, but it has a few Quailty of Life improvments that make working with editor windows much much easier - go read the code if you want to know more!

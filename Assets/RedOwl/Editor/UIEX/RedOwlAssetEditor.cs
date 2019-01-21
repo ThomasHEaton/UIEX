@@ -1,4 +1,3 @@
-﻿/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +5,7 @@ using UnityEditor;
 
 namespace RedOwl.Editor
 {
-	public abstract class RedOwlInspector<T1, T2> : RedOwlEditorWindow<T2> where T1 : ScriptableObject where T2 : RedOwlInspector<T1, T2>
+	public abstract class RedOwlAssetEditor<T1, T2> : RedOwlEditorWindow<T2> where T1 : ScriptableObject where T2 : RedOwlAssetEditor<T1, T2>
 	{
 		public static void OpenWith(T1 target, WindowDockStyles style = WindowDockStyles.Inspector)
 		{
@@ -55,4 +54,3 @@ namespace RedOwl.Editor
 		public abstract void Load(T1 obj);
 	}
 }
-*/

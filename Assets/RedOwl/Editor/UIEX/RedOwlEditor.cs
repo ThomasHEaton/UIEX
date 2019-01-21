@@ -1,10 +1,16 @@
-﻿using System.Reflection;
+﻿/*
+using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.Experimental.UIElements;
+#if UNITY_2019_1_OR_NEWER
+using UnityEngine.UIElements;
+using UnityEditor.UIElements;
+#else
 using UnityEditor.Experimental;
+using UnityEngine.Experimental.UIElements;
 using UnityEditor.Experimental.UIElements;
+#endif
 
 namespace RedOwl.Editor
 {
@@ -60,3 +66,4 @@ namespace RedOwl.Editor
 		}
 	}
 }
+*/
