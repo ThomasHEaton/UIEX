@@ -26,7 +26,7 @@
 Here is a example EditorWindow that has mouse and input handling and shows off a number of features - if you'd like a breakdown of each feature checkout the documentation section
 
 <details>
-  <summary>Click to expand</summary><p>
+  <summary>Example Editor Class</summary><p>
 
 ```cs
 using System.Collections.Generic;
@@ -87,10 +87,8 @@ public class Demo : RedOwlEditorWindow<Demo>, IOnKeyboard, IOnMouse
 ```
 </p></details>
 
-Here is a sample custom element that can pan and zoom
-
 <details>
-  <summary>Click to expand</summary><p>
+  <summary>Example Custom Element</summary><p>
 
 ```cs
 using System.Collections.Generic;
@@ -158,7 +156,7 @@ The following documentation assumes you have a little bit of familiarity with c#
 Collectively the following class will be refered to as the `RedOwlClasses` for purposes of understanding what features only work within these classes
 
 <details>
-  <summary>Classes</summary><p>
+  <summary>Classes Documentation</summary><p>
 
 ### RedOwlVisualElement (Gold)
 
@@ -193,7 +191,7 @@ NOT FOR USE YET - this class is intended to be the inspector class to build cust
 These attributes can be used on or in `RedOwlClasses` to have them perform common operations such as loading UXML, attaching USS files, adding USS class names to the root element, etc etc
 
 <details>
-  <summary>Attributes</summary><p>
+  <summary>Attributes Documenation</summary><p>
 
 ### UXML
 
@@ -327,7 +325,7 @@ Some of the callback methods have extra data which is generally useful when work
 #### NOTE: while the manipulators will automatically hook themseleves up inside `RedOwlClasses` this does not mean you cannot use these manipulators with other UIElements classes.  You could still apply this manipulators to non `RedOwlClasses` and feed them the "config" structs and they would still work properly, you just don't need to implement the interfaces
 
 <details>
-  <summary>Attributes</summary><p>
+  <summary>Manipulators Documenation</summary><p>
 
 ### RedOwlMouseManipulator
 
