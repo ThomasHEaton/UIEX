@@ -5,7 +5,11 @@
 <p align="center">
     <a href="#what-it-looks-like">What it looks like?</a> •
     <a href="#installation">How to get it?</a> •
-    <a href="#current-features">Features</a>
+    <a href="#documentation">Documentation</a> •
+    <a href="#classes">Classes</a> •
+    <a href="#attributes">Attributes</a> •
+    <a href="#manipulators">Manipulators</a> •
+    <a href="#custom-elements">Custom Elements</a>
 </p>
 
 # Key Features
@@ -79,7 +83,7 @@ public class Demo : RedOwlEditorWindow<Demo>, IOnKeyboard, IOnMouse
 }
 ```
 
-Here a sample custom element that can pan and zoom
+Here is a sample custom element that can pan and zoom
 
 ```cs
 using System.Collections.Generic;
@@ -135,13 +139,11 @@ The best method if you are using Unity > 2018.3 is via the new package manager.
 - Add the following line to the dependencies section `"com.redowl.editor.uiex": "https://github.com/rocktavious/UIEX.git",`
 - Open Unity and the package should download automatically
 
-If you are not using using Unity < 2018.3 - i'm sorry you are out of luck, UIElements is only useable in this version of unity or higher
+If you are using Unity < 2018.3 - i'm sorry you are out of luck, UIElements is only useable in this version of unity or higher
 
-# Current Features
+# Documentation
 
-#### This section of the docs is still under heavy WIP
-
-The following documentation assume you have a little bit of familiarity with c# and Unity's new UI Elements system - if not go read about it [here](https://docs.unity3d.com/Manual/UIElements.html)
+The following documentation assumes you have a little bit of familiarity with c# and Unity's new UI Elements system - if not go read about it [here](https://docs.unity3d.com/Manual/UIElements.html)
 
 ## Classes
 
