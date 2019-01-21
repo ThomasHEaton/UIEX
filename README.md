@@ -25,6 +25,9 @@
 
 Here is a example EditorWindow that has mouse and input handling and shows off a number of features - if you'd like a breakdown of each feature checkout the documentation section
 
+<details>
+  <summary>Click to expand</summary><p>
+
 ```cs
 using System.Collections.Generic;
 using UnityEngine;
@@ -82,8 +85,12 @@ public class Demo : RedOwlEditorWindow<Demo>, IOnKeyboard, IOnMouse
 	}
 }
 ```
+</p></details>
 
 Here is a sample custom element that can pan and zoom
+
+<details>
+  <summary>Click to expand</summary><p>
 
 ```cs
 using System.Collections.Generic;
@@ -130,6 +137,7 @@ public class PanAndZoom : RedOwlVisualElement, IOnMouse, IOnZoom
 	}
 }
 ```
+</p></details>
 
 # Installation
 
@@ -148,6 +156,9 @@ The following documentation assumes you have a little bit of familiarity with c#
 ## Classes
 
 Collectively the following class will be refered to as the `RedOwlClasses` for purposes of understanding what features only work within these classes
+
+<details>
+  <summary>Classes</summary><p>
 
 ### RedOwlVisualElement (Gold)
 
@@ -175,9 +186,14 @@ Almost all of the example code in this readme is deriving from `RedOwlVisualElem
 
 NOT FOR USE YET - this class is intended to be the inspector class to build custom inspectors for custom types but in Unity 2018.3 the Inspector Window does not yet support UIElements inspectors
 
+</p></details>
+
 ## Attributes
 
 These attributes can be used on or in `RedOwlClasses` to have them perform common operations such as loading UXML, attaching USS files, adding USS class names to the root element, etc etc
+
+<details>
+  <summary>Attributes</summary><p>
 
 ### UXML
 
@@ -296,6 +312,8 @@ namespace RedOwl.Demo
 
 The first function's attribute is given a "true" argument which tells the system to only schedule the callback once after the delay given
 
+</p></details>
+
 ## Manipulators
 
 The manipulators system has been generalized to allow for more easily defining callbacks within your `RedOwlClasses` without having to write your own manipulator class - this gets you back closer to how IMGUI worked while still retaining the UI Event bubbling improvements of UIElements
@@ -307,6 +325,9 @@ The interfaces you have to implement help the RedOwl editor class know that it s
 Some of the callback methods have extra data which is generally useful when working with that kind of input event - such as the MouseFilters.OnMove callback gives you a delta of the mouse movement between callbacks, but all of the callback methods also passthrough the original event if you want to get at other properites or methods defined on that type of event - IE `evt.StopPropagation()`
 
 #### NOTE: while the manipulators will automatically hook themseleves up inside `RedOwlClasses` this does not mean you cannot use these manipulators with other UIElements classes.  You could still apply this manipulators to non `RedOwlClasses` and feed them the "config" structs and they would still work properly, you just don't need to implement the interfaces
+
+<details>
+  <summary>Attributes</summary><p>
 
 ### RedOwlMouseManipulator
 
@@ -426,6 +447,8 @@ public class DemoElement : RedOwlVisualElement, IOnZoom
 ```
 
 #### NOTE: the `RedOwlWheelManipulator` currently will not work on non `RedOwlClasses`
+
+</p></details>
 
 ## Custom Elements
 
