@@ -15,7 +15,7 @@
 * Provide a set of base classes which remove alot of general editor scripting boilerplate
 * A library of UIElement elements that are missing from the built in set of elements
 
-#### NOTE: This is a library for coders to help them make unity UI's easier when using UIElements, if you are looking for something a little more friendly i suggest you check out (Odin)[https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041]
+#### NOTE: This is a library for coders to help them make unity UI's easier when using UIElements, if you are looking for something a little more friendly i suggest you check out [Odin](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
 
 # What it looks like?
 
@@ -151,23 +151,201 @@ If you are not using using Unity > 2018.3 - i'm sorry you are out of luck, UIEle
 
 ## Attributes
 
+These attributes can be used on or in RedOwl editor subclasses to have the editor perform common operations such as loading UXML, attaching USS files, add USS class names to the root element, etc etc
+
 ### UXML
+
+Place this attribute on any RedOwl editor class and it will load the UXML file - if the path given is blank it will build a path from the classes namespace and class name
+
+```cs
+namespace RedOwl.Demo
+{
+    [UXML]
+    public class DemoElement : RedOwlVisualElement {}
+}
+```
+
+Will load the UXML file `Resources/RedOwl/Demo/DemoElementLayout.uxml`
 
 ### UXMLReference
 
+Use this attribute on fields of a RedOwl editor class and it will populate the field with the object from the UXML file loaded using the query system - if the name given is blank it will use the fields name to query for the element within the UXML
+
+```cs
+namespace RedOwl.Demo
+{
+    public class DemoElement : RedOwlVisualElement
+    {
+        [UXMLReference]
+        VisualElement Content;
+        
+        [UXMLReference("SideBar")]
+        VisualElement Navigation;
+    }
+}
+```
+
+With the below UXML these fields would be populated with references to them
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<UXML xmlns="UnityEngine.Experimental.UIElements">
+    <VisualElement name="Content">
+        <VisualElement name="SideBar" />
+    </VisualElement>
+</UXML>
+```
+
+NOTE: the type of the field is taken into consideration and an error will be thrown if it does not match the element found
+
 ### USS
+
+Place this attribute on any RedOwl editor class and it will load the USS file - if the path given is blank it will build a path from the classes namespace and class name
+
+```cs
+namespace RedOwl.Demo
+{
+    [USS]
+    public class DemoElement : RedOwlVisualElement {}
+}
+```
+
+Will load the USS file `Resources/RedOwl/Demo/DemoElementStyle.uss`
 
 ### USSClass
 
+Place this attribute on any RedOwl editor class and it will add a USS class to this element
+
+```cs
+namespace RedOwl.Demo
+{
+    [USSClass("vertical")]
+    public class DemoElement : RedOwlVisualElement {}
+}
+```
+
 ### UICallback
+
+Use this attribute to schedule functions for callback within your RedOwl editor class at certain intervals automatically
+
+```cs
+namespace RedOwl.Demo
+{
+    public class DemoElement : RedOwlVisualElement
+    {
+        [UICallback(true, 1)]
+        void DoSomethingOnce() { Debug.Log("Will only be called once after 1ms!"); }
+        
+        [UICallback(100)]
+        void DoSomethingForever() { Debug.Log("Will be called every 100ms!"); }
+    }
+}
+```
 
 ## Manipulators
 
+The manipulators system has been slightly reworked to allow for more easily defining callbacks within your RedOwl editor class without having to write your own manipulator class - this gets you back closer to how IMGUI worked while still retaining the UI Event bubbling improvements of UIElements
+
+The core of the Mouse and Keyboard manipulators is that they've been written to be generic and take "config" structs which help them decide where to send the events too
+
+The interfaces you have to implement help the RedOwl editor class know that it should hook a manipulator into the system and then ask for your filter "config" structs
+
+All of the callback methods take the original event and some of the callback methods have extra data which is generally useful when working with that kind of input event - such as the MouseFilters.OnMove callback gives you a delta of the mouse movement between callbacks.
+
 ### RedOwlMouseManipulator
+
+To enable this manipulator on your RedOwl editor class you have to implement an interface
+
+```cs
+[UXML]
+public class DemoElement : RedOwlVisualElement, IOnMouse
+{
+	[UXMLReference]
+	VisualElement frame;
+	
+	public IEnumerable<MouseFilter> MouseFilters {
+		get {
+			yield return new MouseFilter { 
+				button = MouseButton.LeftMouse,
+				modifiers = EventModifiers.Control,
+				OnMove = OnPan
+			};
+			yield return new MouseFilter { 
+				button = MouseButton.MiddleMouse,
+				modifiers = EventModifiers.None,
+				OnMove = OnPan
+			};
+		}
+	}
+	
+	public void OnPan(MouseMoveEvent evt, Vector2 delta)
+	{
+		Vector3 current = frame.transform.position;
+		frame.transform.position = new Vector3(current.x + delta.x, current.y + delta.y, -100f);
+	}
+}
+```
+
+The above shows an example of implementing the IOnMouse interface and giving it 2 "config" structures which map to the same function on the class - this means you can hookup multiple ways to callback into your code from the input system.
 
 ### RedOwlKeyboardManipulator
 
+The keyboard filter works much like the mouse filter just with a different interface
+
+```cs
+public class DemoElement : RedOwlVisualElement, IOnKeyboard
+{
+	public IEnumerable<KeyboardFilter> KeyboardFilters {
+		get {
+			yield return new KeyboardFilter {
+				key = KeyCode.F,
+				OnDown = OnKeyDown
+			};
+		}
+	}
+	
+	void OnKeyDown(KeyDownEvent evt)
+	{
+		Debug.Log("This will get called when the F key is pressed down or held down");
+	}
+}
+```
+
 ### RedOwlWheelManipulator
+
+The wheel manipulator is slightly different then the previous 2 because there is really no configuration you need to pass in - all you care about is which direction the wheel is turned, right?
+
+```cs
+public class DemoElement : RedOwlVisualElement, IOnWheel
+{
+	public void OnWheel(WheelEvent evt, int wheelDelta)
+	{
+		Debug.Log($"The wheel moved: {wheelDelta}")
+	}
+}
+```
+
+The `wheelDelta` data will be constrained to values 0, 1, or -1 to make building actions off this easier
+
+There is also another variation of the wheel manipulator callback that is specifically designed for zooming actions because it provides you will a `scale` data that can be feed into UIElements transforms to scale them
+
+```cs
+[UXML]
+public class DemoElement : RedOwlVisualElement, IOnZoom
+{
+	[UXMLReference]
+	VisualElement frame;
+	
+	public float zoomMinScale { get { return 0.2f; } }
+	public float zoomMaxScale { get { return 15f; } }
+	public float zoomScaleStep { get { return 0.15f; } }
+	public EventModifiers zoomActivationModifiers { get { return EventModifiers.None; } }		
+	public void OnZoom(WheelEvent evt, Vector3 scale)
+	{
+		frame.transform.scale = scale;
+	}
+}
+```
 
 ## Custom Elements
 
