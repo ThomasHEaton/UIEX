@@ -26,6 +26,9 @@
 First lets start out with an example VisualElement that you'd write if you didn't use this library and then we'll show that same example VisualElement if you did write it with this library so you can see how much boilerplate code goes way.
 
 Given these UXML and USS files the below the code turns them into an element that can pan around its child element with right mouse click.
+
+<details>
+  <summary>Source for UXML and USS (click to open)</summary><p>
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <UXML xmlns="UnityEngine.Experimental.UIElements">
@@ -49,6 +52,8 @@ Given these UXML and USS files the below the code turns them into an element tha
     background-image: Resource("RedOwl/Demo/Logo")
 }
 ```
+
+</p></details>
 
 <details>
   <summary>The Unity Only Way (click to open)</summary><p>
