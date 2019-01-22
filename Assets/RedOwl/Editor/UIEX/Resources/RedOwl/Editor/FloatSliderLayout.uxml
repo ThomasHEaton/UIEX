@@ -2,7 +2,7 @@
 <UXML xmlns="UnityEngine.Experimental.UIElements" xmlns:ue="UnityEditor.Experimental.UIElements">
     <VisualElement class="property">
         <Label name="label" />
-        <Slider name="slider" direction="Horizontal" class="fill" />
+        <Slider name="slider" direction="Horizontal" class="flexfill" />
         <ue:FloatField name="field" />
     </VisualElement>
 </UXML>

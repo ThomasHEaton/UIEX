@@ -23,72 +23,146 @@
 
 # What it looks like?
 
-Here is a example EditorWindow that has mouse and input handling and shows off a number of features - if you'd like a breakdown of each feature checkout the documentation section
+First lets start out with an example VisualElement that you'd write if you didn't use this library and then we'll show that same example VisualElement if you did write it with this library so you can see how much boilerplate code goes way.
+
+Given these UXML and USS files the below the code turns them into an element that can pan around its child element with right mouse click.
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<UXML xmlns="UnityEngine.Experimental.UIElements">
+    <VisualElement name="content" class="fill">
+        <VisualElement name="frame">
+            <VisualElement name="texture" class="logo" />
+        </VisualElement>
+    </VisualElement>
+</UXML>
+```
+
+```cs
+.fill {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+}
+.logo {
+    background-image: Resource("RedOwl/Demo/Logo")
+}
+```
 
 <details>
-  <summary>Example Editor Class</summary><p>
+  <summary>The Unity Only Way (click to open)</summary><p>
 
 ```cs
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.Experimental.UIElements;
-using RedOwl.Editor;
 
-[UXML, USS, USSClass("vertical", "fill")]
-public class Demo : RedOwlEditorWindow<Demo>, IOnKeyboard, IOnMouse
+namespace RedOwl.Demo
 {
-	[UXMLReference]
-	VisualElement Content;
-	
-	[UXMLReference("SideBar")]
-	VisualElement Navigation;
-	
-	[MenuItem("Tools/Demo")]
-	public static void Open()
-	{
-		EnsureWindow();
-	}
-	
-	public IEnumerable<MouseFilter> MouseFilters {
-		get {
-			yield return new MouseFilter { 
-				button = MouseButton.LeftMouse,
-				modifiers = EventModifiers.Control,
-				OnMove = OnMouseMove
-			};
-			yield return new MouseFilter { 
-				button = MouseButton.RightMouse,
-				modifiers = EventModifiers.None,
-				OnMove = OnMouseMove
-			};
+    public class PanManipulator : MouseManipulator
+    {
+        private Action<Vector2> callback
+		private Vector2 _mouseStart;
+		private bool _active;
+
+		public PanManipulator(Action<Vector2> callback, params ManipulatorActivationFilter[] filters) : base()
+		{
+            base()
+            foreach (var filter in filters)
+            {
+                activators.Add(filter)
+            }
+			this.callback = callback;
+			_active = false;
 		}
-	}
-	
-	public IEnumerable<KeyboardFilter> KeyboardFilters {
-		get {
-			yield return new KeyboardFilter {
-				key = KeyCode.F,
-				OnDown = OnKeyDown
-			};
+		
+		protected override void RegisterCallbacksOnTarget()
+		{
+			target.RegisterCallback<MouseDownEvent>(OnMouseDown);
+			target.RegisterCallback<MouseMoveEvent>(OnMouseMove);
+			target.RegisterCallback<MouseUpEvent>(OnMouseUp);
 		}
-	}
-	
-	void OnMouseMove(MouseMoveEvent evt, Vector2 delta)
-	{
-		Debug.Log(delta);
-	}
-	
-	void OnKeyDown(KeyDownEvent evt)
-	{
-		Debug.Log(evt.keyCode);
-	}
+
+		protected override void UnregisterCallbacksFromTarget()
+		{
+			target.UnregisterCallback<MouseDownEvent>(OnMouseDown);
+			target.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
+			target.UnregisterCallback<MouseUpEvent>(OnMouseUp);
+		}
+		
+		protected void OnMouseDown(MouseDownEvent evt)
+		{
+			if (_active)
+			{
+				evt.StopImmediatePropagation();
+				return;
+			}
+
+			if (CanStartManipulation(evt))
+			{
+				_mouseStart = evt.localMousePosition;
+				_active = true;
+				target.CaptureMouse();
+				evt.StopPropagation();
+			}
+		}
+
+		protected void OnMouseMove(MouseMoveEvent evt)
+		{
+			if (!_active || !target.HasMouseCapture()) return;
+			callback(evt.localMousePosition - _mouseStart);
+			_mouseStart = evt.localMousePosition;
+			evt.StopPropagation();
+		}
+
+		protected void OnMouseUp(MouseUpEvent evt)
+		{
+			if (!_active || !target.HasMouseCapture() || !CanStopManipulation(evt)) return;
+			_active = false;
+			target.ReleaseMouse();
+			evt.StopPropagation();
+		}
+    }
+
+    public class Demo : EditorWindow
+    {
+        const string uxmlPath = "RedOwl/Demo/DemoLayout";
+        const string ussPath = "RedOwl/Demo/DemoStyle";
+
+        VisualElement frame;
+
+        [MenuItem("Tools/Unity")]
+        public static void Open()
+        {
+            var wnd = GetWindow<Demo>();
+        }
+
+        public void OnEnable()
+        {
+            var root = this.GetRootVisualContainer();
+            var visualTree = Resources.Load<VisualTreeAsset>(uxmlPAth);
+            visualTree.CloneTree(root, null);
+            root.AddStyleSheetPath(ussPath);
+
+            frame = root.Q("frame");
+
+            root.AddManipulator(OnPath, new ManipulatorActivationFilter { button = MouseButton.RightMouse})
+        }
+        
+        public void OnPan(Vector2 delta)
+        {
+            Vector3 current = frame.transform.position;
+            frame.transform.position = new Vector3(current.x + delta.x, current.y + delta.y, -100f);
+        }
+    }
 }
 ```
 </p></details>
 
 <details>
-  <summary>Example Custom Element</summary><p>
+  <summary>The Red Owl Way (click to open)</summary><p>
 
 ```cs
 using System.Collections.Generic;
@@ -96,46 +170,40 @@ using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 using RedOwl.Editor;
 
-[UXML]
-public class PanAndZoom : RedOwlVisualElement, IOnMouse, IOnZoom
+namespace RedOwl.Demo
 {
-	public new class UxmlFactory : UxmlFactory<PanAndZoom> {}
-	
-	[UXMLReference]
-	VisualElement frame;
-	
-	public IEnumerable<MouseFilter> MouseFilters {
-		get {
-			yield return new MouseFilter { 
-				button = MouseButton.LeftMouse,
-				modifiers = EventModifiers.Control,
-				OnMove = OnPan
-			};
-			yield return new MouseFilter { 
-				button = MouseButton.MiddleMouse,
-				modifiers = EventModifiers.None,
-				OnMove = OnPan
-			};
-		}
-	}
-	
-	public void OnPan(MouseMoveEvent evt, Vector2 delta)
-	{
-		Vector3 current = frame.transform.position;
-		frame.transform.position = new Vector3(current.x + delta.x, current.y + delta.y, -100f);
-	}
-	
-	public float zoomMinScale { get { return 0.2f; } }
-	public float zoomMaxScale { get { return 15f; } }
-	public float zoomScaleStep { get { return 0.15f; } }
-	public EventModifiers zoomActivationModifiers { get { return EventModifiers.Control; } }		
-	public void OnZoom(WheelEvent evt, Vector3 scale)
-	{
-		frame.transform.scale = scale;
-	}
+    [UXML, USS]
+    public class Demo : RedOwlEditorWindow<Demo>, IOnMouse
+    {
+        [UXMLReference]
+        VisualElement frame;
+
+        [MenuItem("Tools/RedOwl")]
+        public static void Open()
+        {
+            EnsureWindow();
+        }
+        
+        public IEnumerable<MouseFilter> MouseFilters {
+            get {
+                yield return new MouseFilter { 
+                    button = MouseButton.RightMouse,
+                    OnMove = OnPan
+                };
+            }
+        }
+        
+        public void OnPan(MouseMoveEvent evt, Vector2 delta)
+        {
+            Vector3 current = frame.transform.position;
+            frame.transform.position = new Vector3(current.x + delta.x, current.y + delta.y, -100f);
+        }
+    }
 }
 ```
 </p></details>
+
+There are 104 lines of code in the Unity way and there are only 34 in the RedOwl way.  Both achive the same end result, one just has you writing alot more code over and over and over for each editor window.  The point of this library is to abstract away that boilerplate code so that every VisualElement or EditorWindow has access to it and you don't have to write it over and over and over.  On top of reducing the redundent code it also keeps a very clear seperation of concerns, your C# is truely closer to being just business logic instead of being both business logic and ui hookup code.
 
 # Installation
 
@@ -435,8 +503,6 @@ public class DemoElement : RedOwlVisualElement, IOnZoom
     }
 }
 ```
-
-#### NOTE: the `RedOwlWheelManipulator` currently will not work on non `RedOwlClasses`
 
 ## Custom Elements
 

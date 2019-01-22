@@ -1,4 +1,5 @@
 ﻿#pragma warning disable 0649 // UXMLReference variable declared but not assigned to.
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -67,10 +68,12 @@ namespace RedOwl.Editor
 		private void CreateUI()
 		{
 			label.style.width = label.text.Length * 8;
-			slider.OnValueChanged(evt => { Value = evt.newValue; });
+			slider.OnValueChanged(evt => { Value = evt.newValue; OnValueChanged?.Invoke(); });
 			slider.style.minWidth = 50;
-			field.OnValueChanged(evt => {Value = evt.newValue; });
+			field.OnValueChanged(evt => {Value = evt.newValue; OnValueChanged?.Invoke(); });
 			field.style.width = 80;
 		}
+		
+		public Action OnValueChanged;
 	}
 }

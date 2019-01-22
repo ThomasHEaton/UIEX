@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UXML xmlns="UnityEngine.Experimental.UIElements">
     <VisualElement class="property">
-        <Label name="path" class="fill" />
+        <Label name="path" class="flexfill" />
         <Button name="button" text="Choose" />
     </VisualElement>
 </UXML>
