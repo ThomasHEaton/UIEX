@@ -205,6 +205,43 @@ namespace RedOwl.Demo
 
 There are 104 lines of code in the Unity way and there are only 34 in the RedOwl way.  Both achive the same end result, one just has you writing alot more code over and over and over for each editor window.  The point of this library is to abstract away that boilerplate code so that every VisualElement or EditorWindow has access to it and you don't have to write it over and over and over.  On top of reducing the redundent code it also keeps a very clear seperation of concerns, your C# is truely closer to being just business logic instead of being both business logic and ui hookup code.
 
+BUT!!!  I don't wanna use your base classes.  Well then you are in luck, you don't have to - if you looked at the `RedOwlVisualElement` base class you'd notice that its very sparse.  Thats because all that sweet sweet functionality is offloaded into a utility function so you can do this if you need to.
+
+```cs
+public class DemoElement : VisualElement, IOnMouse
+{
+    VisualElement frame;
+ 
+    public DemoElement()
+    {
+        RedOwlUtils.Setup(this, this);  //Here is where the magic happens
+    }
+ 
+    [UICallback(1, true)]
+    private void InitUI()
+    {
+        frame = new VisualElement();
+    }
+ 
+    public IEnumerable<MouseFilter> MouseFilters {
+        get {
+            yield return new MouseFilter {
+                button = MouseButton.RightMouse,
+                OnMove = OnPan
+            };
+        }
+    }
+ 
+    private void OnPan(MouseMoveEvent evt, Vector2 delta)
+    {
+        Vector3 current = frame.transform.position;
+        frame.transform.position = new Vector3(current.x + delta.x, current.y + delta.y, -100f);
+    }
+}
+```
+
+So from here on out when we refer to `RedOwlClasses` we mean any class that has been run through the `RedOwlUtils.Setup` function.  The RedOwl variants of Unity's classes all have this called on them at the appropreiate time and place so you don't have to worry about it.
+
 # Installation
 
 The best method if you are using Unity > 2018.3 is via the new package manager.
@@ -255,8 +292,6 @@ NOT FOR USE YET - this class is intended to be the inspector class to build cust
 </p></details>
 
 ## Attributes
-
-These attributes can be used on or in `RedOwlClasses` to have them perform common operations such as loading UXML, attaching USS files, adding USS class names to the root element, etc etc
 
 ### UXML
 
