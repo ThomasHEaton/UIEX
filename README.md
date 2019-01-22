@@ -3,8 +3,8 @@
 
 
 <p align="center">
-    <a href="#what-it-looks-like">What it looks like?</a> •
-    <a href="#installation">How to get it?</a> •
+    <a href="#introduction">Introduction</a> •
+    <a href="#installation">Installation</a> •
     <a href="#documentation">Documentation</a> •
     <a href="#classes">Classes</a> •
     <a href="#attributes">Attributes</a> •
@@ -21,7 +21,7 @@
 
 #### NOTE: This is a library for coders to help them make unity UI's easier when using UIElements, if you are looking for something a little more friendly i suggest you check out [Odin](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
 
-# What it looks like?
+# Introduction
 
 First lets start out with an example VisualElement that you'd write if you didn't use this library and then we'll show that same example VisualElement if you did write it with this library so you can see how much boilerplate code goes way.
 
@@ -206,13 +206,25 @@ namespace RedOwl.Demo
     }
 }
 ```
-</p></details>
+</p></details><br />
 
-There are 104 lines of code in the Unity way and there are only 34 in the RedOwl way.  Both achive the same end result, one just has you writing alot more code over and over and over for each editor window.  The point of this library is to abstract away that boilerplate code so that every VisualElement or EditorWindow has access to it and you don't have to write it over and over and over.  On top of reducing the redundent code it also keeps a very clear seperation of concerns, your C# is truely closer to being just business logic instead of being both business logic and ui hookup code.
+There are 104 lines of code in the Unity way and there are only 34 in the RedOwl way but both achive the same end result.
 
-BUT!!!  I don't wanna use your base classes.  Well then you are in luck, you don't have to - if you looked at the `RedOwlVisualElement` base class you'd notice that its very sparse.  Thats because all that sweet sweet functionality is offloaded into a utility function so you can do this if you need to.
+On top of reducing the redundent code it also help you keep a very clear seperation of concerns, your C# is truely closer to being just business logic instead of being both business logic and ui hookup / input handling hookup code.
+
+### But I don't wanna use your base classes!!!
+
+Well then you are in luck, you don't have to - if you looked at the `RedOwlVisualElement` base class you'd notice that its very sparse.  Thats because all that sweet sweet functionality is offloaded into a utility function so you can do this if you need to.
+
+<details>
+  <summary>Unity + RedOwl (click to open)</summary><p>
 
 ```cs
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Experimental.UIElements;
+using RedOwl.Editor;
+
 public class DemoElement : VisualElement, IOnMouse
 {
     VisualElement frame;
@@ -244,6 +256,7 @@ public class DemoElement : VisualElement, IOnMouse
     }
 }
 ```
+</p></details><br />
 
 So from here on out when we refer to `RedOwlClasses` we mean any class that has been run through the `RedOwlUtils.Setup` function.  The RedOwl variants of Unity's classes all have this called on them at the appropreiate time and place so you don't have to worry about it.
 
