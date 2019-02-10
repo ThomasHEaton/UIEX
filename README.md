@@ -602,3 +602,44 @@ or you can use it in UXML like this:
     </VisualElement>
 </UXML>
 ```
+
+### TextureCanvas (Beta)
+
+This custom element allows you to display a texture in your ui similar to IMGUI's preview fields
+
+Here is an example of how to use the element in c#:
+
+```cs
+using UnityEngine;
+using RedOwl.Editor;
+
+namespace RedOwl.Demo
+{
+    public class DemoElement : RedOwlVisualElement
+    {
+        TextureCanvas obj;
+
+        [UICallback(1, true)]
+        void InitializeUI() {
+            Texture2D target = new Texture2D(16, 16);
+			target.filterMode = FilterMode.Point;
+			
+            obj = new TextureCanvas()
+			obj.CanvasSize = 256;
+			obj.texture = target;
+            Add(obj);
+        }
+    }
+}
+```
+
+or you can use it in UXML like this:
+
+```xml
+<UXML xmlns="UnityEngine.UIElements" xmlns:ro="RedOwl.Editor">
+    <VisualElement class="container row">
+        <ro:TextureCanvas name="canvas" />
+    </VisualElement>
+</UXML>
+
+```

@@ -40,25 +40,31 @@ namespace RedOwl.Editor
 	    
 	    private bool transparent;
 
-	    public int CanvasSize = -1;
+	    private int _CanvasSize = -1;
+	    public int CanvasSize {
+	    	get { return _CanvasSize; }
+	    	set {
+	    		this.style.width = value;
+	    		this.style.height = value;
+	    		_CanvasSize = value;
+	    	}
+	    }
 	    
 	    private int width {
-	    	get { return (texture != null && CanvasSize == -1) ? texture.width : CanvasSize; }
+	    	get { return (_texture != null && _CanvasSize == -1) ? _texture.width : _CanvasSize; }
 	    }
 	    
 	    private int height {
-	    	get { return (texture != null && CanvasSize == -1) ? texture.height : CanvasSize; }
+	    	get { return (_texture != null && _CanvasSize == -1) ? _texture.height : _CanvasSize; }
 	    }
 
-	    private RenderTexture _paint;
-	    private Texture2D _texture;
-	    public Texture2D texture {
+	    private Texture _texture;
+	    public Texture texture {
 	    	get { return _texture; }
 	    	set {
-	    		_paint = new RenderTexture(value.width, value.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
-		    	_paint.filterMode = value.filterMode;
-		    	Graphics.Blit(value, _paint);
-		    	_texture = value;
+	    		var rt = _texture as RenderTexture;
+	    		if (rt != null) rt.Release();
+	    		_texture = value;
 	    	}
 	    }
 		
@@ -74,13 +80,13 @@ namespace RedOwl.Editor
 	    
 	    private void UpdateUI()
 	    {
-	    	if (_paint != null && show)
+	    	if (_texture != null && show)
 	    	{
 	    		if (transparent)
 	    		{
-	    			GUI.DrawTexture(new Rect(0, 0, width, height), _paint);
+	    			GUI.DrawTexture(new Rect(0, 0, width, height), _texture);
 	    		} else {
-			    	EditorGUI.DrawTextureTransparent(new Rect(0, 0, width, height), _paint);
+			    	EditorGUI.DrawTextureTransparent(new Rect(0, 0, width, height), _texture);
 	    		}
 	    	}
 	    }

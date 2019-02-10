@@ -22,6 +22,8 @@ namespace RedOwl.Editor
 		{
             UxmlStringAttributeDescription _type = new UxmlStringAttributeDescription { name = "type" };
 			UxmlStringAttributeDescription _icon = new UxmlStringAttributeDescription { name = "icon" };
+            UxmlFloatAttributeDescription _width = new UxmlFloatAttributeDescription { name = "width" };
+            UxmlFloatAttributeDescription _height = new UxmlFloatAttributeDescription { name = "height" };
 
 			public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
 			{
@@ -34,6 +36,10 @@ namespace RedOwl.Editor
 				base.Init(ve, bag, cc);
                 target.type = _type.GetValueFromBag(bag, cc);
 				target.icon = _icon.GetValueFromBag(bag, cc);
+                float width = _width.GetValueFromBag(bag, cc);
+                float height = _height.GetValueFromBag(bag, cc);
+                if (width > 0) target.style.width = width;
+                if (height > 0) target.style.height = height;
 			}
 		}
 
@@ -58,9 +64,17 @@ namespace RedOwl.Editor
             }
         }
 		
-		public FontAwesome() : base()
+		public FontAwesome() : base() {}
+        public FontAwesome(string icon)
         {
-            style.width = 25;
+            _type = "solid";
+            _icon = icon;
+        }
+
+        public FontAwesome(string type, string icon)
+        {
+            _type = type;
+            _icon = icon;
         }
 
         [UICallback(1, true)]
