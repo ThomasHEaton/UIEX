@@ -2,6 +2,22 @@
     overflow: hidden;
 }
 
+.container {
+    display: flex;
+}
+
+.row {
+    flex-direction: row;
+    align-items: stretch;
+    align-content: center;
+}
+
+.column {
+    flex-direction: column;
+    align-items: stretch;
+    align-content: flex-start;
+}
+
 .hide {
     position: absolute;
     top: -9999px;
@@ -53,6 +69,16 @@
     padding: 2px;
 }
 
+.workspaceGroup {
+    overflow: visible;
+    width: 0;
+    height: 0;
+}
+
+.workspaceGroup > * {
+    position: absolute;
+}
+
 .seperator {
     width: 2px;
     background-color: rgb(20,20,20);
@@ -62,4 +88,19 @@
     position: absolute;
     top: 0px;
     left: 0px;
+}
+
+.fa {
+    overflow: visible;
+    -unity-font: resource("FontAwesome/Regular");
+}
+
+.fa-solid {
+    overflow: visible;
+    -unity-font: resource("FontAwesome/Solid");
+}
+
+.fa-brands {
+    overflow: visible;
+    -unity-font: resource("FontAwesome/Brands");
 }

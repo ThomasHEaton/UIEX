@@ -31,7 +31,7 @@ Given these UXML and USS files the below the code turns them into an element tha
   <summary>Source for UXML and USS (click to open)</summary><p>
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<UXML xmlns="UnityEngine.Experimental.UIElements">
+<UXML xmlns="UnityEngine.UIElements">
     <VisualElement name="content" class="fill">
         <VisualElement name="frame">
             <VisualElement name="texture" class="logo" />
@@ -62,7 +62,7 @@ Given these UXML and USS files the below the code turns them into an element tha
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.Experimental.UIElements;
+using UnityEngine.UIElements;
 
 namespace RedOwl.Demo
 {
@@ -172,7 +172,7 @@ namespace RedOwl.Demo
 ```cs
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
+using UnityEngine.UIElements;
 using RedOwl.Editor;
 
 namespace RedOwl.Demo
@@ -222,7 +222,7 @@ Well then you are in luck, you don't have to - if you looked at the `RedOwlVisua
 ```cs
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
+using UnityEngine.UIElements;
 using RedOwl.Editor;
 
 public class DemoElement : VisualElement, IOnMouse
@@ -365,7 +365,7 @@ With the below UXML these `DemoElement` fields would be populated with reference
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<UXML xmlns="UnityEngine.Experimental.UIElements" xmlns:ro="RedOwl.Editor">
+<UXML xmlns="UnityEngine.UIElements" xmlns:ro="RedOwl.Editor">
     <VisualElement name="Content">
         <VisualElement name="SideBar" />
     </VisualElement>
@@ -559,10 +559,46 @@ public class DemoElement : RedOwlVisualElement, IOnZoom
 
 ## Custom Elements
 
-TBD
+The following documenation is about custom elements you can use in your unity editor ui's which are not included in the base set of unity's elements.
 
-### TextureCanvas (Alpha)
+### FontAwesome (Gold)
 
-### PathPicker (Alpha)
+This custom element allows you to use FontAwesome icons (free only) in your unity editor ui's - https://fontawesome.com
 
-### FloatSlider / IntSlider (Beta)
+Here is an example of how to use the element in c#:
+
+```cs
+using RedOwl.Editor;
+
+namespace RedOwl.Demo
+{
+    public class DemoElement : RedOwlVisualElement
+    {
+        FontAwesome obj;
+
+        [UICallback(1, true)]
+        void InitializeUI() {
+            obj = new FontAwesome("solid", "fa-chevron-right")
+            Add(obj);
+        }
+
+        [UICallback(500)]
+        void UpdateUI() {
+            if (obj.icon == "fa-chevron-right") obj.icon = "fa-chevron-down";
+            else obj.icon = "fa-chevron-right";
+        }
+    }
+}
+```
+
+or you can use it in UXML like this:
+
+```xml
+<UXML xmlns="UnityEngine.UIElements" xmlns:ue="UnityEditor.UIElements" xmlns:ro="RedOwl.Editor">
+    <VisualElement class="container row">
+        <ue:ToolbarButton class="container row"><ro:FontAwesome type="solid" icon="fa-chevron-down" width="25" height="25" /></ue:ToolbarButton>
+        <ro:FontAwesome type="solid" icon="fa-address-card" width="25" height="25" />
+        <Label name="title" text="Title" />
+    </VisualElement>
+</UXML>
+```
