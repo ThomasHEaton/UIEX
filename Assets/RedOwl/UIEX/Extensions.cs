@@ -24,20 +24,32 @@ namespace RedOwl.Editor
 			return output;
 		}
 		
-		public static void Hide(this VisualElement self)
+		public static void Show(this VisualElement self, bool visiblity = true)
 		{
-			self.AddToClassList("hide");
+			if (visiblity) self.RemoveFromClassList("hide");
+			else self.AddToClassList("hide");
 		}
-
-		public static void Show(this VisualElement self)
+		
+		public static IEnumerable<T> Children<T>(this VisualElement self)
 		{
-			self.RemoveFromClassList("hide");
+			return self.Children().Cast<T>();
 		}
 		
 		public static bool HasAttribute<T>(this Type self) where T : Attribute
 		{
 			var attribute = self.GetCustomAttributes(typeof(T), false).FirstOrDefault();
 			return attribute != null;
+		}
+		
+		public static bool TryGetAttribute<T>(this Type self, out T customAttribute) where T : Attribute
+		{
+			var attribute = self.GetCustomAttributes(typeof(T), false).FirstOrDefault();
+			if (attribute == null) {
+				customAttribute = null;
+				return false;
+			}
+			customAttribute = (T)attribute;
+			return true;
 		}
 		
 		public static bool TryGetAttribute<T>(this MemberInfo self, out T customAttribute) where T : Attribute
@@ -60,6 +72,16 @@ namespace RedOwl.Editor
 					a => { return statusCallback.Invoke(value) ? DropdownMenu.MenuAction.StatusFlags.Checked : DropdownMenu.MenuAction.StatusFlags.Normal; });
 			}
 			callback.Invoke(initialValue);
+		}
+		
+		public static Vector2 GetPosition(this ITransform self)
+		{
+			return new Vector2(self.position.x, self.position.y);
+		}
+		
+		public static Vector2Int ToFloor(this Vector2 self)
+		{
+			return new Vector2Int(Mathf.FloorToInt(self.x), Mathf.FloorToInt(self.y));
 		}
 	}
 }

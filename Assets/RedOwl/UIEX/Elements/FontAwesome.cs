@@ -14,7 +14,7 @@ using UnityEditor.Experimental.UIElements;
 namespace RedOwl.Editor
 {
 	[UXML]
-	public class FontAwesome : RedOwlVisualElement
+	public class FontAwesome : Label
 	{		
 		public new class UxmlFactory : UxmlFactory<FontAwesome, UxmlTraits> {}
 		
@@ -22,8 +22,6 @@ namespace RedOwl.Editor
 		{
             UxmlStringAttributeDescription _type = new UxmlStringAttributeDescription { name = "type" };
 			UxmlStringAttributeDescription _icon = new UxmlStringAttributeDescription { name = "icon" };
-            UxmlFloatAttributeDescription _width = new UxmlFloatAttributeDescription { name = "width" };
-            UxmlFloatAttributeDescription _height = new UxmlFloatAttributeDescription { name = "height" };
 
 			public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
 			{
@@ -36,15 +34,8 @@ namespace RedOwl.Editor
 				base.Init(ve, bag, cc);
                 target.type = _type.GetValueFromBag(bag, cc);
 				target.icon = _icon.GetValueFromBag(bag, cc);
-                float width = _width.GetValueFromBag(bag, cc);
-                float height = _height.GetValueFromBag(bag, cc);
-                if (width > 0) target.style.width = width;
-                if (height > 0) target.style.height = height;
 			}
 		}
-
-        [UXMLReference]
-        public Label holder;
 
         string _type;
 		public string type {
@@ -80,20 +71,21 @@ namespace RedOwl.Editor
         [UICallback(1, true)]
         private void UpdateIcon()
         {
-            holder.RemoveFromClassList("fa");
-            holder.RemoveFromClassList("fa-solid");
-            holder.RemoveFromClassList("fa-brands");
+            AddToClassList("fa");
+            RemoveFromClassList("fa-regular");
+            RemoveFromClassList("fa-solid");
+            RemoveFromClassList("fa-brands");
             switch (_type)
             {
                 case "regular":
-                    holder.AddToClassList("fa");
+                    AddToClassList("fa-regular");
                     break;
                 default:
                 case "solid":
-                    holder.AddToClassList("fa-solid");
+                    AddToClassList("fa-solid");
                     break;
                 case "brands":
-                    holder.AddToClassList("fa-brands");
+                    AddToClassList("fa-brands");
                     break;
             }
             char content = '\0';
@@ -4150,7 +4142,7 @@ namespace RedOwl.Editor
                 content = '\uf63f';
                 break;
             }
-            holder.text = content.ToString();
+            text = content.ToString();
         }
 	}
 }

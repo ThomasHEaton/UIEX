@@ -9,7 +9,12 @@ using UnityEngine.Experimental.UIElements;
 
 namespace RedOwl.Editor
 {
+	public interface IOnMouseMove {
+		void OnMouseMove(MouseMoveEvent evt);
+	}
+	
 	public interface IOnMouse {
+		bool IsContentDragger { get; }
 		IEnumerable<MouseFilter> MouseFilters { get; }
 	}
 	
@@ -29,7 +34,7 @@ namespace RedOwl.Editor
 		public int clickCount;
 		
 		public Action<MouseDownEvent> OnDown;
-		public Action<MouseMoveEvent, Vector2> OnMove;
+		public Action<MouseMoveEvent, Vector3> OnMove;
 		public Action<MouseUpEvent> OnUp;
 		
 		public bool Matches(IMouseEvent e)
@@ -67,14 +72,16 @@ namespace RedOwl.Editor
 	
 	public class RedOwlMouseManipulator : Manipulator
 	{
+		private bool isContentDragger;
 		private MouseFilter[] filters;
 		public MouseFilter currentFilter { get; private set; }
 		
-		private Vector2 _mouseStart;
+		private Vector2 _start;
 		private bool _active;
 
-		public RedOwlMouseManipulator(params MouseFilter[] filters)
+		public RedOwlMouseManipulator(bool isContentDragger, params MouseFilter[] filters)
 		{
+			this.isContentDragger = isContentDragger;
 			this.filters = filters;
 			_active = false;
 		}
@@ -84,6 +91,12 @@ namespace RedOwl.Editor
 			target.RegisterCallback<MouseDownEvent>(OnMouseDown);
 			target.RegisterCallback<MouseMoveEvent>(OnMouseMove);
 			target.RegisterCallback<MouseUpEvent>(OnMouseUp);
+			
+			var moveTarget = target as IOnMouseMove;
+			if (moveTarget != null)
+			{
+				target.RegisterCallback<MouseMoveEvent>(moveTarget.OnMouseMove);
+			}
 			
 			var hoverTarget = target as IOnMouseHover;
 			if (hoverTarget != null)
@@ -99,6 +112,12 @@ namespace RedOwl.Editor
 			target.UnregisterCallback<MouseDownEvent>(OnMouseDown);
 			target.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
 			target.UnregisterCallback<MouseUpEvent>(OnMouseUp);
+			
+			var moveTarget = target as IOnMouseMove;
+			if (moveTarget != null)
+			{
+				target.UnregisterCallback<MouseMoveEvent>(moveTarget.OnMouseMove);
+			}
 			
 			var hoverTarget = target as IOnMouseHover;
 			if (hoverTarget != null)
@@ -119,28 +138,42 @@ namespace RedOwl.Editor
 
 			if (CanStartManipulation(evt))
 			{
-				_mouseStart = evt.localMousePosition;
 				_active = true;
 				target.CaptureMouse();
+				_start = evt.localMousePosition;
 				if (currentFilter.OnDown != null) currentFilter.OnDown(evt);
-				evt.StopPropagation();
+				evt.StopImmediatePropagation();
 			}
 		}
 
 		protected void OnMouseMove(MouseMoveEvent evt)
 		{
 			if (!_active || !target.HasMouseCapture()) return;
-			if (currentFilter.OnMove != null) currentFilter.OnMove(evt, evt.localMousePosition - _mouseStart);
-			_mouseStart = evt.localMousePosition;
+			if (currentFilter.OnMove != null)
+			{
+				VisualElement element = evt.target as VisualElement;
+				if (element != null)
+				{
+					Vector2 diff = evt.localMousePosition - _start;
+					if (isContentDragger == false)
+					{
+						diff.x *= element.transform.scale.x;
+						diff.y *= element.transform.scale.y;
+					}
+					currentFilter.OnMove(evt, (Vector3)diff);
+				}
+			}
+			if (isContentDragger)
+				_start = evt.localMousePosition;
 			evt.StopPropagation();
 		}
 
 		protected void OnMouseUp(MouseUpEvent evt)
 		{
 			if (!_active || !target.HasMouseCapture() || !CanStopManipulation(evt)) return;
-			if (currentFilter.OnUp != null) currentFilter.OnUp(evt);
-			_active = false;
 			target.ReleaseMouse();
+			_active = false;
+			if (currentFilter.OnUp != null) currentFilter.OnUp(evt);
 			evt.StopPropagation();
 		}
 

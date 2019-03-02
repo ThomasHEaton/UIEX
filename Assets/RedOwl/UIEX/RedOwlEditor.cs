@@ -1,4 +1,34 @@
-﻿/*
+﻿using System.Collections;
+using UnityEngine;
+using UnityEditor;
+
+namespace RedOwl.Editor
+{
+	public abstract class RedOwlEditor : UnityEditor.Editor
+	{	
+		public override void OnInspectorGUI()
+		{
+			serializedObject.Update();
+		
+			OnBeforeDefaultInspector();
+			DrawPropertiesExcluding(serializedObject, GetInvisibleInDefaultInspector());
+			OnAfterDefaultInspector();
+		
+			serializedObject.ApplyModifiedProperties();
+		}
+		
+		protected virtual void OnBeforeDefaultInspector() {}
+		
+		protected virtual void OnAfterDefaultInspector() {}
+		
+		protected virtual string[] GetInvisibleInDefaultInspector()
+		{
+			return new string[0];
+		}
+	}
+}
+
+/*
 using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;

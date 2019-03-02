@@ -1,5 +1,5 @@
-﻿{
-	"name": "RedOwl.Editor.UIEX",
+{
+    "name": "RedOwl.UIEX",
     "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [

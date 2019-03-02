@@ -1,5 +1,10 @@
 * {
     overflow: hidden;
+    visibility: visible;
+}
+
+.overflow * {
+    overflow: visible;
 }
 
 .container {
@@ -8,9 +13,11 @@
 
 .row {
     flex-direction: row;
-    align-items: stretch;
+    align-items: center;
     align-content: center;
+    justify-content: space-between;
 }
+
 
 .column {
     flex-direction: column;
@@ -18,16 +25,28 @@
     align-content: flex-start;
 }
 
+.padded-2 {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.padded-4 {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
 .hide {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
+    visibility: hidden;
 }
 
 .horizontal {
     flex-direction: row;
-    flex-grow: 1;
-    flex-shrink: 1;
+    flex-grow: 1 1 auto;
+    align-content: flex-start;
 }
 
 .property {
@@ -41,8 +60,7 @@
 
 .vertical {
     flex-direction: column;
-    flex-grow: 1;
-    flex-shrink: 1;
+    flex: 1 1 auto;
     align-content: flex-start;
 }
 
@@ -55,8 +73,7 @@
 }
 
 .flexfill {
-    flex-grow: 1;
-    flex-shrink: 1;
+    flex-grow: 1 1 auto;
 }
 
 .centered {
@@ -69,14 +86,8 @@
     padding: 2px;
 }
 
-.workspaceGroup {
+.workspace * {
     overflow: visible;
-    width: 0;
-    height: 0;
-}
-
-.workspaceGroup > * {
-    position: absolute;
 }
 
 .seperator {
@@ -91,16 +102,38 @@
 }
 
 .fa {
+    color: rgb(0, 0, 0);
+    padding-top: 1px;
+    padding-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
     overflow: visible;
+    display:inline-block;
+    font-style:normal;
+    font-variant:normal;
+    text-rendering:auto;
+    line-height: 1;
+}
+.fa:hover {
+    color: rgb(40, 40, 40);
+}
+
+.fa-inverse{
+    color: rgb(255, 255, 255);
+}
+
+.fa-regular {
     -unity-font: resource("FontAwesome/Regular");
 }
 
 .fa-solid {
-    overflow: visible;
     -unity-font: resource("FontAwesome/Solid");
 }
 
 .fa-brands {
-    overflow: visible;
     -unity-font: resource("FontAwesome/Brands");
 }
+
+.fa-1x{font-size: 16px}
+.fa-2x{font-size: 32px}
+.fa-3x{font-size: 48px}

@@ -98,14 +98,23 @@ namespace RedOwl.Editor
 			if (mouseHandler != null)
 			{
 				//Debug.LogFormat("Adding 'MouseManipulator' to '{0}'", instance.GetType().Name);
-				element.AddManipulator(new RedOwlMouseManipulator(mouseHandler.MouseFilters.ToArray()));
+				element.AddManipulator(new RedOwlMouseManipulator(mouseHandler.IsContentDragger, mouseHandler.MouseFilters.ToArray()));
 			}
+			
+			IOnContextMenu contextMenuHandler = instance as IOnContextMenu;
+			if (contextMenuHandler != null)
+			{
+				//Debug.LogFormat("Adding 'ContextualMenuManipulator' to '{0}'", instance.GetType().Name);
+				element.AddManipulator(new ContextualMenuManipulator(contextMenuHandler.OnContextMenu));
+			}
+			
 			IOnKeyboard keyboardHandler = instance as IOnKeyboard;
 			if (keyboardHandler != null)
 			{
 				//Debug.LogFormat("Adding 'KeyboardManipulator' to '{0}'", instance.GetType().Name);
 				element.AddManipulator(new RedOwlKeyboardManipulator(keyboardHandler.KeyboardFilters.ToArray()));
 			}
+			
 			IOnWheel wheelHandler = instance as IOnWheel;
 			IOnZoom zoomHandler = instance as IOnZoom;
 			if (wheelHandler != null || zoomHandler != null)

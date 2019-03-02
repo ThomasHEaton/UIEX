@@ -21,7 +21,7 @@ namespace RedOwl.Editor
 		Docked,
 	}
 	
-	[USS("RedOwl/Editor/Styles"), USSClass("vertical")]
+	[USS("RedOwl/Editor/Styles")]//, USSClass("container", "column")]
 	public abstract class RedOwlEditorWindow<T> : EditorWindow where T : RedOwlEditorWindow<T>
 	{
 		private static T _instance;
@@ -95,7 +95,10 @@ namespace RedOwl.Editor
 			Root.focusIndex = 0;
 			Root.RegisterCallback<MouseEnterEvent>(e => { instance.Focus(); });
 			RedOwlUtils.Setup(this, Root);
+			BuildUI();
 			IsInitalized = true;
 		}
+		
+		protected virtual void BuildUI() {}
 	}
 }
