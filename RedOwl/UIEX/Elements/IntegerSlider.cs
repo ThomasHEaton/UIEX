@@ -12,14 +12,13 @@ using UnityEditor.Experimental.UIElements;
 
 namespace RedOwl.Editor
 {
-	[UXML]
-	public class IntSlider : RedOwlVisualElement
-	{		
-		public new class UxmlFactory : UxmlFactory<IntSlider, UxmlTraits> {}
+	[UXML, USSClass("horizontal")]
+	public class IntegerSlider : RedOwlBaseField<int>
+	{
+		public new class UxmlFactory : UxmlFactory<IntegerSlider, UxmlTraits> {}
 		
 		public new class UxmlTraits : VisualElement.UxmlTraits
 		{
-			UxmlStringAttributeDescription _label = new UxmlStringAttributeDescription { name = "label" };
 			UxmlIntAttributeDescription _lowValue = new UxmlIntAttributeDescription { name = "low-value" };
 			UxmlIntAttributeDescription _highValue = new UxmlIntAttributeDescription { name = "high-value" };
 			UxmlIntAttributeDescription _value = new UxmlIntAttributeDescription { name = "value" };
@@ -31,46 +30,29 @@ namespace RedOwl.Editor
 
 			public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
 			{
-				var target = (IntSlider)ve;
+				var target = (IntegerSlider)ve;
 				base.Init(ve, bag, cc);
-				target.label.text = _label.GetValueFromBag(bag, cc);
 				target.slider.lowValue = _lowValue.GetValueFromBag(bag, cc);
 				target.slider.highValue = _highValue.GetValueFromBag(bag, cc);
-				target.Value = _value.GetValueFromBag(bag, cc);
+				target.value = _value.GetValueFromBag(bag, cc);
 			}
 		}
-		
-		[UXMLReference]
-		Label label;
 	    
 		[UXMLReference]
 		SliderInt slider;
 		
 		[UXMLReference]
 		IntegerField field;
-
-		private int _value;
-		public int Value {
-			get {
-				return _value;
-			}
-			set {
-				_value = value;
-				slider.value = value;
-				field.value = value;
-			}
-		}
 		
-		public IntSlider() : base() {}
+		public IntegerSlider() : base() {}
 	    
 		[UICallback(1, true)]
 		private void CreateUI()
 		{
-			label.style.width = label.text.Length * 8;
-			slider.OnValueChanged(evt => { Value = evt.newValue; });
+			slider.OnValueChanged(evt => { field.value = value = evt.newValue; });
 			slider.style.minWidth = 50;
-			field.OnValueChanged(evt => {Value = evt.newValue; });
-			field.style.width = 80;
+			field.OnValueChanged(evt => { slider.value = value = evt.newValue; });
+			field.style.minWidth = 80;
 		}
 	}
 }

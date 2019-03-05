@@ -24,13 +24,13 @@ namespace RedOwl.Editor
 	{
 		public new class UxmlFactory : UxmlFactory<HandlesRenderer> {}
 		
-		private IHandlesBezier bezier;
+		private IHandlesBezier data;
 		
 		private IMGUIContainer container;
 		
 		public HandlesRenderer() : base() {}
 		
-		public void Load(IHandlesBezier bezier) { this.bezier = bezier; }
+		public void Load(IHandlesBezier data) { this.data = data; }
 	    
 		[UICallback(1, true)]
 		private void CreateUI()
@@ -42,36 +42,29 @@ namespace RedOwl.Editor
 	    
 		private void UpdateUI()
 		{
-			if (bezier != null) DrawHandlesBezier();
+			if (data != null) DrawHandlesBezier();
 		}
 		
 		private void DrawHandlesBezier()
 		{
 			Vector2 start;
-			Vector2 startTangent;
+			Vector2 startTangent = Vector2.right;
 			Vector2 end;
-			Vector2 endTangent;
-			float lineWidth = bezier.LineWidth;
-			Color lineColor = bezier.LineColor;
-			foreach (var conn in bezier.GetBezierPoints())
+			Vector2 endTangent = Vector2.left;
+			float lineWidth = data.LineWidth;
+			Color lineColor = data.LineColor;
+			float factor = 40;
+			foreach (var conn in data.GetBezierPoints())
 			{
 				start = container.WorldToLocal(conn.Item1);
 				end = container.WorldToLocal(conn.Item2);
-				if (start.x < end.x)
-				{
-					startTangent = Vector2.right;
-					endTangent = Vector2.left;
-				} else {
-					startTangent = Vector2.left;
-					endTangent = Vector2.right;
-				}
 				//TODO: Turn this into a 2 curve drawing where you draw from
 				// start to midpoint and then end to midpoint where midpoint is end - start
 				Handles.DrawBezier(
 					start,
 					end,
-					start + startTangent * 100,
-					end + endTangent * 100,
+					start + startTangent * factor,
+					end + endTangent * factor,
 					lineColor,
 					null,
 					lineWidth

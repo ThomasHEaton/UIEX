@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 #if UNITY_2019_1_OR_NEWER
 using UnityEngine.UIElements;
 #else
@@ -8,11 +8,11 @@ using UnityEngine.Experimental.UIElements;
 namespace RedOwl.Editor
 {
     [USS("RedOwl/Editor/Styles")]
-    public abstract class RedOwlVisualElement : VisualElement
-    {				
+    public abstract class RedOwlBaseField<T> : BaseField<T>
+    {
         public bool IsInitalized { get; protected set; }
         
-        public RedOwlVisualElement()
+        public RedOwlBaseField() : base()
         {
             if (IsInitalized) return;
             RedOwlUtils.Setup(this, this);

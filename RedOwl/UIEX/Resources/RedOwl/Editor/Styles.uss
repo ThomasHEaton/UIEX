@@ -11,6 +11,10 @@
     display: flex;
 }
 
+.stretch {
+    align-items: stretch;
+}
+
 .row {
     flex-direction: row;
     align-items: center;
@@ -76,6 +80,10 @@
     flex-grow: 1 1 auto;
 }
 
+.collapsed {
+    display: none;
+}
+
 .centered {
     flex-direction: row;
     justify-content: center;
@@ -137,3 +145,6 @@
 .fa-1x{font-size: 16px}
 .fa-2x{font-size: 32px}
 .fa-3x{font-size: 48px}
+
+#slider {min-height: 15}
+.nowrap {flex-wrap: nowrap}

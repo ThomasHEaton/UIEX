@@ -13,7 +13,6 @@ using UnityEditor.Experimental.UIElements;
 
 namespace RedOwl.Editor
 {
-	[UXML]
 	public class FontAwesome : Label
 	{		
 		public new class UxmlFactory : UxmlFactory<FontAwesome, UxmlTraits> {}

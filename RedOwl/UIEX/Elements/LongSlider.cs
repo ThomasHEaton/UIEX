@@ -14,15 +14,15 @@ using UnityEditor.Experimental.UIElements;
 namespace RedOwl.Editor
 {
 	[UXML, USSClass("horizontal")]
-	public class FloatSlider : RedOwlBaseField<float>
+	public class LongSlider : RedOwlBaseField<long>
 	{
-		public new class UxmlFactory : UxmlFactory<FloatSlider, UxmlTraits> {}
+		public new class UxmlFactory : UxmlFactory<LongSlider, UxmlTraits> {}
 		
 		public new class UxmlTraits : VisualElement.UxmlTraits
 		{
 			UxmlFloatAttributeDescription _lowValue = new UxmlFloatAttributeDescription { name = "low-value" };
 			UxmlFloatAttributeDescription _highValue = new UxmlFloatAttributeDescription { name = "high-value" };
-			UxmlFloatAttributeDescription _value = new UxmlFloatAttributeDescription { name = "value" };
+			UxmlLongAttributeDescription _value = new UxmlLongAttributeDescription { name = "value" };
 
 			public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
 			{
@@ -31,7 +31,7 @@ namespace RedOwl.Editor
 
 			public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
 			{
-				var target = (FloatSlider)ve;
+				var target = (LongSlider)ve;
 				base.Init(ve, bag, cc);
 				target.slider.lowValue = _lowValue.GetValueFromBag(bag, cc);
 				target.slider.highValue = _highValue.GetValueFromBag(bag, cc);
@@ -43,14 +43,14 @@ namespace RedOwl.Editor
 		Slider slider;
 		
 		[UXMLReference]
-		FloatField field;
+		LongField field;
 		
-		public FloatSlider() : base() {}
+		public LongSlider() : base() {}
 	    
 		[UICallback(1, true)]
 		private void CreateUI()
 		{
-			slider.OnValueChanged(evt => { field.value = value = evt.newValue; });
+			slider.OnValueChanged(evt => { field.value = value = (long)evt.newValue; });
 			slider.style.minWidth = 50;
 			field.OnValueChanged(evt => { slider.value = value = evt.newValue; });
 			field.style.minWidth = 80;

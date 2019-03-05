@@ -9,8 +9,8 @@ using UnityEngine.Experimental.UIElements;
 
 namespace RedOwl.Editor
 {
-	public interface IOnContextMenu
-	{
-		void OnContextMenu(ContextualMenuPopulateEvent  evt);
-	}
+    public interface IOnContextMenu
+    {
+        void OnContextMenu(ContextualMenuPopulateEvent  evt);
+    }
 }
