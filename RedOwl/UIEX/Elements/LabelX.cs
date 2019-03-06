@@ -54,7 +54,6 @@ namespace RedOwl.Editor
 		private void CreateUI()
 		{
 			label.text = ObjectNames.NicifyVariableName(label.text);
-			this.style.marginLeft = 13;
 		}
 	}
 }

@@ -15,9 +15,7 @@ namespace RedOwl.Editor
 {
 	public interface IHandlesBezier
 	{
-		float LineWidth { get; }
-		Color LineColor { get; }
-		IEnumerable<Tuple<Vector2, Vector2>> GetBezierPoints();
+		IEnumerable<Tuple<Vector2, Vector2, Color, float>> GetBezierPoints();
 	}
 	
 	public class HandlesRenderer : RedOwlVisualElement
@@ -51,13 +49,11 @@ namespace RedOwl.Editor
 			Vector2 startTangent = Vector2.right;
 			Vector2 end;
 			Vector2 endTangent = Vector2.left;
-			float lineWidth = data.LineWidth;
-			Color lineColor = data.LineColor;
 			float factor = 40;
-			foreach (var conn in data.GetBezierPoints())
+			foreach (var point in data.GetBezierPoints())
 			{
-				start = container.WorldToLocal(conn.Item1);
-				end = container.WorldToLocal(conn.Item2);
+				start = container.WorldToLocal(point.Item1);
+				end = container.WorldToLocal(point.Item2);
 				//TODO: Turn this into a 2 curve drawing where you draw from
 				// start to midpoint and then end to midpoint where midpoint is end - start
 				Handles.DrawBezier(
@@ -65,9 +61,9 @@ namespace RedOwl.Editor
 					end,
 					start + startTangent * factor,
 					end + endTangent * factor,
-					lineColor,
+					point.Item3,
 					null,
-					lineWidth
+					point.Item4
 				);
 			}
 		}

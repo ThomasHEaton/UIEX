@@ -15,7 +15,7 @@ namespace RedOwl.Editor
 		AssetsPath,
 	}
 	
-	[UXML]
+	[UXML, USSClass("horizontal")]
 	public class PathPicker : RedOwlVisualElement
 	{		
 		public new class UxmlFactory : UxmlFactory<PathPicker> {}

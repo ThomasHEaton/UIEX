@@ -12,7 +12,7 @@ using UnityEditor.Experimental.UIElements;
 
 namespace RedOwl.Editor
 {
-    [USSClass("container", "row")]
+    [USSClass("horizontal")]
     public class PropertyFieldX : RedOwlVisualElement
     {
         public LabelX label = new LabelX();

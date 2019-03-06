@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 #if UNITY_2019_1_OR_NEWER
@@ -20,6 +21,10 @@ namespace RedOwl.Editor
             RedOwlUtils.HandleUXMLReferenceAttributes(instance, element);
             RedOwlUtils.AddManipulators(instance, element);
             RedOwlUtils.RegisterUICallbacks(instance, element);
+            Type type = instance.GetType();
+            element.name = type.Name;
+            element.AddToClassList(type.Namespace);
+            element.AddToClassList(type.Name);
         }
         
         public static string GetAssetNamespace<T>(T instance)

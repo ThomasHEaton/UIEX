@@ -90,7 +90,6 @@
 }
 
 .workspace {
-    background-color: rgb(40, 37, 34);
     padding: 2px;
 }
 
