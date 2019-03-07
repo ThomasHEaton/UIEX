@@ -70,6 +70,7 @@ namespace RedOwl.Editor
         [UICallback(1, true)]
         private void UpdateIcon()
         {
+            RemoveFromClassList("textElement");
             AddToClassList("fa");
             RemoveFromClassList("fa-regular");
             RemoveFromClassList("fa-solid");

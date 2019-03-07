@@ -110,6 +110,8 @@
 
 .fa {
     color: rgb(0, 0, 0);
+    font-size: 16px;
+    min-width: 16;
     padding-top: 1px;
     padding-bottom: 5px;
     padding-left: 3px;
@@ -141,9 +143,20 @@
     -unity-font: resource("FontAwesome/Brands");
 }
 
-.fa-1x{font-size: 16px}
-.fa-2x{font-size: 32px}
-.fa-3x{font-size: 48px}
+.fa-1x{
+    font-size: 16px;
+    min-width: 16;
+}
+
+.fa-2x{
+    font-size: 32px
+    min-width: 32;
+}
+
+.fa-3x{
+    font-size: 48px
+    min-width: 48;
+}
 
 #slider {min-height: 15}
 .nowrap {flex-wrap: nowrap}
