@@ -149,12 +149,12 @@
 }
 
 .fa-2x{
-    font-size: 32px
+    font-size: 32px;
     min-width: 32;
 }
 
 .fa-3x{
-    font-size: 48px
+    font-size: 48px;
     min-width: 48;
 }
 

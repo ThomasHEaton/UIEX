@@ -2,5 +2,4 @@
 <UXML xmlns="UnityEngine.Experimental.UIElements" xmlns:ue="UnityEditor.Experimental.UIElements" xmlns:ro="RedOwl.Editor" xmlns:rog="RedOwl.GraphFramework.Editor">
     <ro:FontAwesome name="separator" type="solid" icon="fa-chevron-left" class="hide" />
     <ue:ToolbarButton name="button" />
-
 </UXML>
