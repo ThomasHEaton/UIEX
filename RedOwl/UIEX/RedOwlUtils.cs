@@ -15,16 +15,16 @@ namespace RedOwl.Editor
         public static void Setup<T>(T instance, VisualElement element)
         {
             //Debug.LogFormat("Performing UIEX Setup on {0}", instance);
+            Type type = instance.GetType();
+            element.AddToClassList("RedOwl");
+            element.AddToClassList(type.Namespace.Replace(".","_"));
+            element.AddToClassList(type.Name);
             RedOwlUtils.HandleUXMLAttribute(instance, element);
             RedOwlUtils.HandleUSSAttributes(instance, element);
             RedOwlUtils.HandleUSSClassAttributes(instance, element);
             RedOwlUtils.HandleUXMLReferenceAttributes(instance, element);
             RedOwlUtils.AddManipulators(instance, element);
             RedOwlUtils.RegisterUICallbacks(instance, element);
-            Type type = instance.GetType();
-            element.name = type.Name;
-            element.AddToClassList(type.Namespace);
-            element.AddToClassList(type.Name);
         }
         
         public static string GetAssetNamespace<T>(T instance)
