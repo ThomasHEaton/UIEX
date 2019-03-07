@@ -65,7 +65,7 @@ namespace RedOwl.Editor
         {
             foreach (var attr in instance.GetType().GetCustomAttributes(typeof(USSAttribute), true))
             {
-                string path = GetUSSPath(element, ((USSAttribute)attr).path);
+                string path = GetUSSPath(instance, ((USSAttribute)attr).path);
                 //Debug.LogFormat("Adding '{0}.uss' to '{1}'", path, instance.GetType().Name);
                 element.AddStyleSheetPath(path);
             }
