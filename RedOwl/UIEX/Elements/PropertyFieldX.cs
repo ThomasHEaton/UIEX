@@ -13,17 +13,21 @@ using UnityEditor.Experimental.UIElements;
 namespace RedOwl.Editor
 {
     [USSClass("horizontal")]
-    public class PropertyFieldX : RedOwlVisualElement
+    public abstract class PropertyFieldX : RedOwlVisualElement
     {
         public LabelX label = new LabelX();
         public bool IsReadonly { get; protected set; }
         public bool AsSlider { get; set; }
+
+        public abstract void UpdateField();
     }
 
     public class PropertyFieldX<T> : PropertyFieldX
     {
         private Func<T> getter;
         private Action<T> setter;
+
+        private INotifyValueChanged<T> field;
 
         public T Value {
             get { return getter(); }
@@ -54,9 +58,32 @@ namespace RedOwl.Editor
             IsReadonly = false;
             AsSlider = asSlider;
         }
+
+        public override void UpdateField()
+        {
+            if (field != null)
+                field.value = Value;
+        }
         
         [UICallback(1, true)]
-        private VisualElement CreateUI()
+        private void CreateUI()
+        {
+            var element = CreateField();
+            if (element != null)
+            {
+                element.AddToClassList("unity-property-field-input");
+                element.AddToClassList("nowrap");
+                field = element as INotifyValueChanged<T>;
+                if (field != null)
+                {
+                    field.OnValueChanged(evt => { SetValue(evt.newValue); });
+                    UpdateField();
+                }
+                this.Add(element);
+            }
+        }
+
+        private VisualElement CreateField()
         {
             if (!string.IsNullOrEmpty(label.text))
             {
@@ -67,34 +94,34 @@ namespace RedOwl.Editor
                 case TypeCode.Char:
                     var field = new TextField();
                     field.maxLength = 1;
-                    return CreateField<string, TextField>(field);
+                    return field;
                 case TypeCode.String:
-                    return CreateField<string, TextField>(new TextField());
+                    return new TextField();
                 case TypeCode.Boolean:
-                    return CreateField<bool, Toggle>(new Toggle());
+                    return new Toggle();
                 case TypeCode.Single:
                     if (AsSlider)
                     {
-                        return CreateField<float, FloatSlider>(new FloatSlider());
+                        return new FloatSlider();
                     } else {
-                        return CreateField<float, FloatField>(new FloatField());
+                        return new FloatField();
                     }
                 case TypeCode.Double:
-                    return CreateField<double, DoubleField>(new DoubleField());
+                    return new DoubleField();
                 case TypeCode.Int16:
                 case TypeCode.Int32:
                     if (AsSlider)
                     {
-                        return CreateField<int, IntegerSlider>(new IntegerSlider());
+                        return new IntegerSlider();
                     } else {
-                        return CreateField<int, IntegerField>(new IntegerField());
+                        return new IntegerField();
                     }
                 case TypeCode.Int64:
                     if (AsSlider)
                     {
-                        return CreateField<long, LongSlider>(new LongSlider());
+                        return new LongSlider();
                     } else {
-                        return CreateField<long, LongField>(new LongField());
+                        return new LongField();
                     }
             }
             return CreateUnityField();
@@ -104,71 +131,62 @@ namespace RedOwl.Editor
         {
             if (typeof(Vector2).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<Vector2, Vector2Field>(new Vector2Field());
+                return new Vector2Field();
             }
             if (typeof(Vector3).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<Vector3, Vector3Field>(new Vector3Field());
+                return new Vector3Field();
             }
             if (typeof(Vector4).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<Vector4, Vector4Field>(new Vector4Field());
+                return new Vector4Field();
             }
             if (typeof(Vector2Int).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<Vector2Int, Vector2IntField>(new Vector2IntField());
+                return new Vector2IntField();
             }
             if (typeof(Vector3Int).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<Vector3Int, Vector3IntField>(new Vector3IntField());
+                return new Vector3IntField();
             }
             if (typeof(Color).IsAssignableFrom(typeof(T)) || typeof(Color32).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<Color, ColorField>(new ColorField());
+                return new ColorField();
             }
             if (typeof(Gradient).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<Gradient, GradientField>(new GradientField());
+                return new GradientField();
             }
             if (typeof(LayerMask).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<int, LayerMaskField>(new LayerMaskField());
+                return new LayerMaskField();
             }
             if (typeof(AnimationCurve).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<AnimationCurve, CurveField>(new CurveField());
+                return new CurveField();
             }
             if (typeof(Rect).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<Rect, RectField>(new RectField());
+                return new RectField();
             }
             if (typeof(RectInt).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<RectInt, RectIntField>(new RectIntField());
+                return new RectIntField();
             }
             if (typeof(Bounds).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<Bounds, BoundsField>(new BoundsField());
+                return new BoundsField();
             }
             if (typeof(BoundsInt).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<BoundsInt, BoundsIntField>(new BoundsIntField());
+                return new BoundsIntField();
             }
             if (typeof(Enum).IsAssignableFrom(typeof(T)))
             {
-                return CreateField<string, PopupField<string>>(new PopupField<string>(Enum.GetNames(typeof(T)).ToList(), 0));
+                return new PopupField<string>(Enum.GetNames(typeof(T)).ToList(), 0);
             }
             Debug.LogWarningFormat("Unable to create PropertyFieldX for: {0} | {1}", typeof(T), typeof(Vector2).IsAssignableFrom(typeof(T)));
             return null;
-        }
-
-        private TField CreateField<TFieldType, TField>(TField field) where TField : VisualElement, INotifyValueChanged<TFieldType>
-        {
-            field.AddToClassList("unity-property-field-input");
-            field.AddToClassList("nowrap");
-            field.OnValueChanged(evt => { SetValue(evt.newValue); });
-            this.Add(field);
-            return field;
         }
     }
 }
