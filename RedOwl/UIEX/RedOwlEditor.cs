@@ -1,28 +1,50 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
 namespace RedOwl.Editor
 {
-    public abstract class RedOwlEditor : UnityEditor.Editor
-    {	
+    public abstract class RedOwlEditor<T> : UnityEditor.Editor where T : UnityEngine.Object
+    {
+        protected T Target {
+            get { return (T)target; }
+        }
+        
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+            EditorGUI.BeginChangeCheck();
             OnBeforeDefaultInspector();
-            DrawPropertiesExcluding(serializedObject, GetInvisibleInDefaultInspector());
+            OnGUI();
             serializedObject.ApplyModifiedProperties();
             OnAfterDefaultInspector();
+            if (EditorGUI.EndChangeCheck()) OnChange();
         }
-        
-        protected virtual void OnBeforeDefaultInspector() {}
-        
-        protected virtual void OnAfterDefaultInspector() {}
-        
+
         protected virtual string[] GetInvisibleInDefaultInspector()
         {
-            return new string[0];
+            var filters = new List<string>();
+            filters.Add("m_Script");
+            foreach (string item in GetHiddenFields())
+            {
+                filters.Add(item);
+            }
+            return filters.ToArray();
         }
+
+        // Contract
+        protected virtual IEnumerable<string> GetHiddenFields() { yield return null; }
+
+        protected virtual void OnBeforeDefaultInspector() {}
+
+        protected virtual void OnGUI()
+        {
+            DrawPropertiesExcluding(serializedObject, GetInvisibleInDefaultInspector());
+        }
+        
+        protected virtual void OnAfterDefaultInspector() {}
+
+        protected virtual void OnChange() {}
     }
 }
 
