@@ -68,7 +68,8 @@ namespace RedOwl.Editor
         [UICallback(1, true)]
         private void CreateUI()
         {
-            var element = CreateField();
+            Type type = typeof(T);
+            var element = CreateField(type);
             if (element != null)
             {
                 element.AddToClassList("unity-property-field-input");
@@ -83,13 +84,13 @@ namespace RedOwl.Editor
             }
         }
 
-        private VisualElement CreateField()
+        private VisualElement CreateField(Type type)
         {
             if (!string.IsNullOrEmpty(label.text))
             {
                 this.Add(label);
             }
-            switch (Type.GetTypeCode(typeof(T)))
+            switch (Type.GetTypeCode(type))
             {
                 case TypeCode.Char:
                     var field = new TextField();
@@ -124,68 +125,81 @@ namespace RedOwl.Editor
                         return new LongField();
                     }
             }
-            return CreateUnityField();
+            return CreateUnityField(type);
         }
 
-        private VisualElement CreateUnityField()
+        private VisualElement CreateUnityField(Type type)
         {
-            if (typeof(Vector2).IsAssignableFrom(typeof(T)))
+            if (typeof(Texture).IsAssignableFrom(type))
+            {
+                VisualElement element;
+                if (typeof(Texture2D).IsAssignableFrom(type))
+                    element = new Texture2DPreviewField();
+                else if (typeof(RenderTexture).IsAssignableFrom(type))
+                    element = new RenderTexturePreviewField();
+                else
+                    element = new TexturePreviewField();
+                IPreviewField field = element as IPreviewField;
+                field.CanvasSize = 64;
+                return element;
+            }
+            if (typeof(Vector2).IsAssignableFrom(type))
             {
                 return new Vector2Field();
             }
-            if (typeof(Vector3).IsAssignableFrom(typeof(T)))
+            if (typeof(Vector3).IsAssignableFrom(type))
             {
                 return new Vector3Field();
             }
-            if (typeof(Vector4).IsAssignableFrom(typeof(T)))
+            if (typeof(Vector4).IsAssignableFrom(type))
             {
                 return new Vector4Field();
             }
-            if (typeof(Vector2Int).IsAssignableFrom(typeof(T)))
+            if (typeof(Vector2Int).IsAssignableFrom(type))
             {
                 return new Vector2IntField();
             }
-            if (typeof(Vector3Int).IsAssignableFrom(typeof(T)))
+            if (typeof(Vector3Int).IsAssignableFrom(type))
             {
                 return new Vector3IntField();
             }
-            if (typeof(Color).IsAssignableFrom(typeof(T)) || typeof(Color32).IsAssignableFrom(typeof(T)))
+            if (typeof(Color).IsAssignableFrom(type) || typeof(Color32).IsAssignableFrom(type))
             {
                 return new ColorField();
             }
-            if (typeof(Gradient).IsAssignableFrom(typeof(T)))
+            if (typeof(Gradient).IsAssignableFrom(type))
             {
                 return new GradientField();
             }
-            if (typeof(LayerMask).IsAssignableFrom(typeof(T)))
+            if (typeof(LayerMask).IsAssignableFrom(type))
             {
                 return new LayerMaskField();
             }
-            if (typeof(AnimationCurve).IsAssignableFrom(typeof(T)))
+            if (typeof(AnimationCurve).IsAssignableFrom(type))
             {
                 return new CurveField();
             }
-            if (typeof(Rect).IsAssignableFrom(typeof(T)))
+            if (typeof(Rect).IsAssignableFrom(type))
             {
                 return new RectField();
             }
-            if (typeof(RectInt).IsAssignableFrom(typeof(T)))
+            if (typeof(RectInt).IsAssignableFrom(type))
             {
                 return new RectIntField();
             }
-            if (typeof(Bounds).IsAssignableFrom(typeof(T)))
+            if (typeof(Bounds).IsAssignableFrom(type))
             {
                 return new BoundsField();
             }
-            if (typeof(BoundsInt).IsAssignableFrom(typeof(T)))
+            if (typeof(BoundsInt).IsAssignableFrom(type))
             {
                 return new BoundsIntField();
             }
-            if (typeof(Enum).IsAssignableFrom(typeof(T)))
+            if (typeof(Enum).IsAssignableFrom(type))
             {
-                return new PopupField<string>(Enum.GetNames(typeof(T)).ToList(), 0);
+                return new PopupField<string>(Enum.GetNames(type).ToList(), 0);
             }
-            Debug.LogWarningFormat("Unable to create PropertyFieldX for: {0} | {1}", typeof(T), typeof(Vector2).IsAssignableFrom(typeof(T)));
+            Debug.LogWarningFormat("Unable to create PropertyFieldX for: {0}", type);
             return null;
         }
     }

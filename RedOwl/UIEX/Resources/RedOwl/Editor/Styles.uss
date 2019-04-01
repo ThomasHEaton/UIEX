@@ -160,3 +160,15 @@
 
 #slider {min-height: 15}
 .nowrap {flex-wrap: nowrap}
+
+.TexturePreview {
+    align-items: flex-end;
+}
+
+.TexturePreview > * {
+    border-color: rgb(20, 20, 20);
+    border-left-width: 0.5;
+    border-top-width: 0.5;
+    border-right-width: 0.5;
+    border-bottom-width: 0.5;
+}

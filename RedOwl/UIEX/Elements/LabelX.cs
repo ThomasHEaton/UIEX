@@ -54,6 +54,7 @@ namespace RedOwl.Editor
 		private void CreateUI()
 		{
 			label.text = ObjectNames.NicifyVariableName(label.text);
+			label.style.positionTop = (this.layout.height * 0.5f) - 10f;
 		}
 	}
 }
