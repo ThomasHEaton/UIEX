@@ -172,3 +172,8 @@
     border-right-width: 0.5;
     border-bottom-width: 0.5;
 }
+
+.LabelX #label {
+    margin-left: 0;
+    margin-right: 0;
+}

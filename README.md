@@ -13,12 +13,12 @@
 
 # Key Features
 
-* Reduce boilerplate code in every class when working with UXML and USS by leveraging c# attributes
-* Provide a better framework for input handleing without the hassel of writing custom manipulators
+* Reduce boilerplate code when working with UIElementts
+* Provide a clean framework for input handleing without writing custom manipulators
 * Provide a set of base classes which remove alot of general editor scripting boilerplate
-* Act as a library of missing controls from the built in set of controls - TexturePreview, PathPicker, etc
+* Act as a library of missing controls from the built in set of controls
 
-#### NOTE: This is a library for coders to help them make unity UI's easier when using UIElements, if you are looking for something a little more friendly i suggest you check out [Odin](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
+#### NOTE: This is a library for coders to help them make unity UI's easier and faster when using UIElements, if you are looking for something a little more friendly i suggest you check out [Odin](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
 
 <h2 align="center">
 	If this library helps you out consider 
@@ -293,23 +293,19 @@ Back? HAHA! Ok so maybe I cheated you a little bit when I said it was simple - a
 
 But even still its pretty crazy how simple it is.  This code has eliminated a TON of boilerplate from all of my UIElements classes that I no longer want to write UIElements code without this library (and I hope you eventually do too!)
 
-### RedOwlEditor (Alpha)
+### RedOwlEditor (Beta)
 
-NOT FOR USE YET - this class in intended to be the editor class for inline field and property inspectors
+This is a standard unity editor that implements automatic change detection and ability to exclude certain properties from being viewed
 
-### RedOwlAssetEditor (Alpha)
+### RedOwlAssetEditor (Beta)
 
-This class is inteded to provide some Quality of Life improvements when writing an editor window which is to provide as the editor for for scriptable objects - this editor window maybe eventually be merged with RedOwlEditorWindow - i'm not sure yet - as it will sort of overlap in functionality with RedOwlEditorWindow and RedOwlInspector - not ready for use yet
+This class is inteded to provide some Quality of Life improvements when writing an editor window for scriptable objects
 
 ### RedOwlEditorWindow (Beta)
 
-This class bring together the RedOwlUtils functions into a Unity EditorWindow class that builds its UI using UIElements.  This class is still under heavy development so i won't document it here yet, but it has a few Quailty of Life improvments that make working with editor windows much much easier - go read the code if you want to know more!
+This class bring together the RedOwlUtils functions into a Unity EditorWindow class that builds its UI using UIElements.  This class is still under heavy development so i won't document it here yet, but it has a few Quailty of Life improvements that make working with editor windows much much easier - go read the code if you want to know more!
 
 Almost all of the example code in this readme is deriving from `RedOwlVisualElement` but anything you can do with that class you can do with this class just the same.
-
-### RedOwlInspector (Alpha)
-
-NOT FOR USE YET - this class is intended to be the inspector class to build custom inspectors for custom types but in Unity 2018.3 the Inspector Window does not yet support UIElements inspectors
 
 </p></details>
 
@@ -327,9 +323,9 @@ namespace RedOwl.Demo
 }
 ```
 
-Would load the UXML file `Resources/RedOwl/Demo.uss`
+Would load the UXML file `Resources/RedOwl/Demo.uxml`
 
-If the path given is blank it will build a path from the classes namespace and class name with a suffix of `Layout`
+If the path given is blank it will build a path from the classes namespace and class name with a suffix of `Layout` as show below
 
 ```cs
 namespace RedOwl.Demo
@@ -411,6 +407,27 @@ namespace RedOwl.Demo
 ```
 
 The attributes are inherited so the resulting classes on `DemoElement2` would be `["vertical","red","fill"]`
+
+### Q & Query
+
+This attribute is to provide uQuery functionality in a more buttoned up way by having a function be called when the element is found
+
+Q - Find a single element and call the function
+Query - Find multiple elements and call the function for each
+
+```cs
+namespace RedOwl.Demo
+{
+    public class DemoElement : RedOwlVisualElement
+    {
+        [Q("prop", "vertical")]
+        void OnElementFound(VisualElement element) { /* will be called only once for the first element found with the name prop and class vertical */ }
+
+        [Query(null, "vertical")]
+        void OnElementFound(VisualElement element) { /* will be called for each element found with the class vertical */ }
+    }
+}
+```
 
 ### UICallback
 
@@ -607,43 +624,4 @@ or you can use it in UXML like this:
 </UXML>
 ```
 
-### TextureCanvas (Beta)
-
-This custom element allows you to display a texture in your ui similar to IMGUI's preview fields
-
-Here is an example of how to use the element in c#:
-
-```cs
-using UnityEngine;
-using RedOwl.Editor;
-
-namespace RedOwl.Demo
-{
-    public class DemoElement : RedOwlVisualElement
-    {
-        TextureCanvas obj;
-
-        [UICallback(1, true)]
-        void InitializeUI() {
-            Texture2D target = new Texture2D(16, 16);
-			target.filterMode = FilterMode.Point;
-			
-            obj = new TextureCanvas()
-			obj.CanvasSize = 256;
-			obj.texture = target;
-            Add(obj);
-        }
-    }
-}
-```
-
-or you can use it in UXML like this:
-
-```xml
-<UXML xmlns="UnityEngine.UIElements" xmlns:ro="RedOwl.Editor">
-    <VisualElement class="container row">
-        <ro:TextureCanvas name="canvas" />
-    </VisualElement>
-</UXML>
-
-```
+There are other custom elements but i'm not documenting them yet as i'd like to prove out their usefulness

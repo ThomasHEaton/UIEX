@@ -11,7 +11,7 @@ using UnityEngine.Experimental.UIElements;
 
 namespace RedOwl.Editor
 {
-    public static class RedOwlUtils
+    public static partial class RedOwlUtils
     {
         public static void Setup<T>(T instance, VisualElement element)
         {
