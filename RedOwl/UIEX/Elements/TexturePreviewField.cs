@@ -60,11 +60,14 @@ namespace RedOwl.Editor
 	    {
 			container.style.minWidth = width;
 			container.style.minHeight = height;
-			if (transparent)
+			if (value != null)
 			{
-				GUI.DrawTexture(new Rect(0, 0, width, height), value);
-			} else {
-				EditorGUI.DrawTextureTransparent(new Rect(0, 0, width, height), value);
+				if (transparent)
+				{
+					GUI.DrawTexture(new Rect(0, 0, width, height), value);
+				} else {
+					EditorGUI.DrawTextureTransparent(new Rect(0, 0, width, height), value);
+				}
 			}
 	    }
     }

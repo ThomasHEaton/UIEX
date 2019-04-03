@@ -27,13 +27,9 @@ namespace RedOwl.Editor
 
         public PreviewField() : base() {}
 	    
-	    [UICallback(1, true)]
-	    protected void CreateUI()
+	    protected override void BuildUI()
 	    {
-	    	container = new IMGUIContainer(() => {
-                if (value != null)
-                    UpdateUI();
-            });
+	    	container = new IMGUIContainer(() => { UpdateUI(); });
 	    	Add(container);
 	    }
 	    
