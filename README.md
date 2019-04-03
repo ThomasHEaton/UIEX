@@ -293,6 +293,10 @@ Back? HAHA! Ok so maybe I cheated you a little bit when I said it was simple - a
 
 But even still its pretty crazy how simple it is.  This code has eliminated a TON of boilerplate from all of my UIElements classes that I no longer want to write UIElements code without this library (and I hope you eventually do too!)
 
+### RedOwlBaseField<T> (Beta)
+
+This is an abstract base class that derives from unity's `BaseField<T> which is a VisualElement that works for a specific type.  This class is very similar to RedOwlVisualElement in that all it really does is run the RedOwlUtils.Setup function for you.
+
 ### RedOwlEditor (Beta)
 
 This is a standard unity editor that implements automatic change detection and ability to exclude certain properties from being viewed
