@@ -14,6 +14,24 @@ namespace RedOwl.Editor
 {
     public static class RedOwlUIElementsExtensions
     {
+        internal static BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+
+        public static IEnumerable<MethodInfo> GetMethods<T>(T instance)
+        {
+            foreach (MethodInfo info in instance.GetType().GetMethods(flags))
+            {
+                yield return info;
+            }
+        }
+
+        public static IEnumerable<FieldInfo> GetFields<T>(T instance)
+        {
+            foreach (FieldInfo info in instance.GetType().GetFields(flags))
+            {
+                yield return info;
+            }
+        }
+        
         private static Regex ResourceMatch = new Regex("[Rr]esources(.*)");
         
         public static string GetResourcesPath(this string self)
@@ -29,39 +47,42 @@ namespace RedOwl.Editor
             if (visiblity) self.RemoveFromClassList("hide");
             else self.AddToClassList("hide");
         }
-        
-        public static IEnumerable<T> Children<T>(this VisualElement self)
+
+        public static void ForFieldWithAttr<T, TAttr>(this T self, Action<FieldInfo, TAttr> callback, bool inhert = true) where TAttr : Attribute
         {
-            return self.Children().Cast<T>();
-        }
-        
-        public static bool HasAttribute<T>(this Type self) where T : Attribute
-        {
-            var attribute = self.GetCustomAttributes(typeof(T), false).FirstOrDefault();
-            return attribute != null;
-        }
-        
-        public static bool TryGetAttribute<T>(this Type self, out T customAttribute) where T : Attribute
-        {
-            var attribute = self.GetCustomAttributes(typeof(T), false).FirstOrDefault();
-            if (attribute == null) {
-                customAttribute = null;
-                return false;
+            foreach (var info in GetFields(self))
+            {
+                info.WithAttr<TAttr>((attr) => { callback(info, attr); }, inhert);
             }
-            customAttribute = (T)attribute;
-            return true;
         }
-        
-        public static bool TryGetAttribute<T>(this MemberInfo self, out T customAttribute) where T : Attribute
+
+        public static void ForMethodWithAttr<T, TAttr>(this T self, Action<MethodInfo, TAttr> callback, bool inhert = true) where TAttr : Attribute
         {
-            var attribute = self.GetCustomAttributes(typeof(T), false).FirstOrDefault();
-            if (attribute == null) {
-                customAttribute = null;
-                return false;
+            foreach (var info in GetMethods(self))
+            {
+                info.WithAttr<TAttr>((attr) => { callback(info, attr); }, inhert);
             }
-            customAttribute = (T)attribute;
-            return true;
         }
+
+		public static void WithAttr<T>(this Type self, Action<T> callback, bool inherit = true) where T : Attribute
+		{
+			var attrs = self.GetCustomAttributes(inherit);
+			foreach (var item in attrs)
+			{
+				T attr = item as T;
+				if (attr != null) callback(attr);
+			}
+		}
+		
+		public static void WithAttr<T>(this MemberInfo self, Action<T> callback, bool inherit = true) where T : Attribute
+		{
+			var attrs = self.GetCustomAttributes(inherit);
+			foreach (var item in attrs)
+			{
+				T attr = item as T;
+				if (attr != null) callback(attr);
+			}
+		}
         
         public static void SetupOptions<T>(this DropdownMenu self, T initialValue, Action<T> callback, Func<T, bool> statusCallback) where T : Enum
         {
@@ -72,16 +93,6 @@ namespace RedOwl.Editor
                     a => { return statusCallback.Invoke(value) ? DropdownMenu.MenuAction.StatusFlags.Checked : DropdownMenu.MenuAction.StatusFlags.Normal; });
             }
             callback.Invoke(initialValue);
-        }
-        
-        public static Vector2 GetPosition(this ITransform self)
-        {
-            return new Vector2(self.position.x, self.position.y);
-        }
-        
-        public static Vector2Int ToFloor(this Vector2 self)
-        {
-            return new Vector2Int(Mathf.FloorToInt(self.x), Mathf.FloorToInt(self.y));
         }
     }
 }
