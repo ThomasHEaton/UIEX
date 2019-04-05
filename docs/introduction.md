@@ -8,7 +8,7 @@ nav_order: 2
 
 First lets start out with an example VisualElement that you'd write if you didn't use this library and then we'll show that same example VisualElement if you did write it with this library so you can see how much boilerplate code goes way.
 
-Given these UXML and USS files the below the code turns them into an element that can pan around its child element with right mouse click.
+Given these UXML and USS files below the code turns them into an element that can pan around its child element with right mouse click.
 
 #### Source UXML and USS for examples
 
@@ -23,7 +23,7 @@ Given these UXML and USS files the below the code turns them into an element tha
 </UXML>
 ```
 
-```cs
+```css
 .fill {
     position: absolute;
     top: 0px;
@@ -38,7 +38,7 @@ Given these UXML and USS files the below the code turns them into an element tha
 
 #### The Unity Only Way
 
-```cs
+```csharp
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -147,7 +147,7 @@ namespace RedOwl.Demo
 
 #### The Red Owl Way
 
-```cs
+```csharp
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -195,7 +195,7 @@ Well then you are in luck, you don't have to - if you looked at the `RedOwlVisua
 
 #### Unity + RedOwl
 
-```cs
+```csharp
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
