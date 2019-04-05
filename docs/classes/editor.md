@@ -17,9 +17,12 @@ This is a standard unity editor class that implements some better default featur
 
 ### Constructors
 ---
+TBD
 
 ### Fields & Properties
 ---
+TBD
 
 ### Methods
 ---
+TBD

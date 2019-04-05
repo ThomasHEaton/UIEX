@@ -17,16 +17,20 @@ This custom element allows you to use FontAwesome icons (free only) in your unit
 
 ### Constructors
 ---
+TBD
 
 ### Fields & Properties
 ---
+TBD
 
 ### Methods
 ---
+TBD
 
 ### Examples
 ---
 
+#### C#
 ```csharp
 using RedOwl.Editor;
 
@@ -51,8 +55,7 @@ namespace RedOwl.Demo
 }
 ```
 
-or you can use it in UXML like this:
-
+#### UXML
 ```xml
 <UXML xmlns="UnityEngine.UIElements" xmlns:ue="UnityEditor.UIElements" xmlns:ro="RedOwl.Editor">
     <VisualElement class="container row">
