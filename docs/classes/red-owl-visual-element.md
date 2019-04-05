@@ -2,8 +2,11 @@
 layout: default
 title: Red Owl Visual Element
 parent: Classes
-nav_order: 2
+nav_order: 1
 ---
+
+# RedOwlVisualElement
+{: .label .label-green  }
 
 This is an abstract base class that derives from `VisualElement` and takes care of all the boiler plate for UIElements - The class is so stupidly simple that i'm going to link it here for you to go read, trust me its really short [so go read it](https://github.com/rocktavious/UIEX/blob/master/Assets/RedOwl/Editor/UIEX/RedOwlVisualElement.cs)
 
