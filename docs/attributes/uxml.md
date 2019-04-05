@@ -30,7 +30,7 @@ Place this attribute on `RedOwlClasses` and it will load the UXML file
 
 The first example would load the UXML file `Resources/RedOwl/Demo.uxml`
 
-```cs
+```csharp
 namespace RedOwl.Demo
 {
     [UXML("RedOwl/Demo")]
@@ -40,7 +40,7 @@ namespace RedOwl.Demo
 
 If the path given is blank it will build a path from the namespace and class name with a suffix of `Layout` like this `Resources/RedOwl/Demo/DemoElementLayout.uxml`
 
-```cs
+```csharp
 namespace RedOwl.Demo
 {
     [UXML]

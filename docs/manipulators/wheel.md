@@ -15,10 +15,10 @@ parent: Manipulators
 
 The wheel manipulator is slightly different then the previous 2 because there is really no configuration you need to pass in - all you care about is which direction the wheel is turned, right?
 
-## Example
+### Example
 ---
 
-```cs
+```csharp
 public class DemoElement : RedOwlVisualElement, IOnWheel
 {
     public void OnWheel(WheelEvent evt, int wheelDelta)
@@ -32,7 +32,7 @@ The `wheelDelta` data will be constrained to values `0`, `1`, or `-1` to make bu
 
 There is also another variation of the wheel manipulator callback that is specifically designed for zooming actions because it provides you with `scale` data that can be fed directly into the UIElements transforms to scale (or zoom) them in and out
 
-```cs
+```csharp
 [UXML]
 public class DemoElement : RedOwlVisualElement, IOnZoom
 {

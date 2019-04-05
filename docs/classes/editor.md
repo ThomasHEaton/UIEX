@@ -15,12 +15,11 @@ parent: Classes
 
 This is a standard unity editor class that implements some better default features like automatic change detection and ability to exclude certain properties from being viewed
 
-## Constructors
+### Constructors
 ---
 
-## Fields & Properties
+### Fields & Properties
 ---
 
-## Methods
+### Methods
 ---
-

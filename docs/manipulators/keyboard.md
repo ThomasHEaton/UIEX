@@ -18,7 +18,7 @@ The keyboard filter works much like the mouse filter just with a different inter
 ### Example
 ---
 
-```cs
+```csharp
 public class DemoElement : RedOwlVisualElement, IOnKeyboard
 {
     public IEnumerable<KeyboardFilter> KeyboardFilters {

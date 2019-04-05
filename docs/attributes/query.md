@@ -33,7 +33,7 @@ Use this attribute on `RedOwlClasses` methods to provide uQuery functionality in
 Q - Find a single element and call the function
 Query - Find multiple elements and call the function for each
 
-```cs
+```csharp
 namespace RedOwl.Demo
 {
     public class DemoElement : RedOwlVisualElement

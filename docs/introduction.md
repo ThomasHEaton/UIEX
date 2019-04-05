@@ -48,7 +48,7 @@ namespace RedOwl.Demo
 {
     public class PanManipulator : MouseManipulator
     {
-        private Action<Vector2> callback
+        private Action<Vector2> callback;
 		private Vector2 _mouseStart;
 		private bool _active;
 

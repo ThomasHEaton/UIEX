@@ -15,10 +15,10 @@ parent: Manipulators
 
 To enable this manipulator on your `RedOwlClasses` you have to implement an interface
 
-## Example
+### Example
 ---
 
-```cs
+```csharp
 [UXML]
 public class DemoElement : RedOwlVisualElement, IOnMouse
 {

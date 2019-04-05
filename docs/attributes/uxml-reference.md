@@ -30,7 +30,7 @@ Use this attribute on `RedOwlClasses` to populate the field with the uxml object
 
 If the name given is blank it will use the fields name to query for the element within the loaded UXML
 
-```cs
+```csharp
 namespace RedOwl.Demo
 {
     [UXML]

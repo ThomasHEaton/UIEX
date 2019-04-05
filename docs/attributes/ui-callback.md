@@ -32,7 +32,7 @@ Use this attribute on `RedOwlClasses` methods to automatically schedule for call
 
 The first function's attribute is given a "true" argument which tells the system to only schedule the callback once after the delay given
 
-```cs
+```csharp
 namespace RedOwl.Demo
 {
     public class DemoElement : RedOwlVisualElement

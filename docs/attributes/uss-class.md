@@ -30,7 +30,7 @@ Place any number of these attributes on `RedOwlClasses` and it will add a USS cl
 
 The attributes are inherited so the resulting classes on `DemoElement2` would be `["vertical","red","fill"]`
 
-```cs
+```csharp
 namespace RedOwl.Demo
 {
     [USSClass("vertical", "red")]

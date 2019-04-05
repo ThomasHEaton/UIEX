@@ -15,19 +15,19 @@ parent: Custom Elements
 
 This custom element allows you to use FontAwesome icons (free only) in your unity editor ui's - https://fontawesome.com
 
-## Constructors
+### Constructors
 ---
 
-## Fields & Properties
+### Fields & Properties
 ---
 
-## Methods
+### Methods
 ---
 
-## Examples
+### Examples
 ---
 
-```cs
+```csharp
 using RedOwl.Editor;
 
 namespace RedOwl.Demo

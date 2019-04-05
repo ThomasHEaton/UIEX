@@ -32,7 +32,7 @@ If the path given is blank it will build a path from the classes namespace and c
 
 The following example would load and attach the USS files `Resources/RedOwl/Demo/DemoElementStyle.uss` and `Resources/RedOwl/Styles.uss`
 
-```cs
+```csharp
 namespace RedOwl.Demo
 {
     [USS, USS("RedOwl/Styles")]
