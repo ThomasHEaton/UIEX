@@ -15,6 +15,8 @@ parent: Attributes
 
 Place any number of these attributes on `RedOwlClasses` and it will load the USS file
 
+<blockquote>It can only be placed on: classes</blockquote>
+
 ## Parameters
 ---
 
@@ -22,8 +24,6 @@ Place any number of these attributes on `RedOwlClasses` and it will load the USS
   <dt>Path</dt>
   <dd>string (default: "")</dd>
 </dl>
-
-It can only be placed on: classes
 
 ## Examples
 ---

@@ -15,6 +15,8 @@ parent: Attributes
 
 Place any number of these attributes on `RedOwlClasses` and it will add a USS class to this element
 
+<blockquote>It can only be placed on: classes</blockquote>
+
 ## Parameters
 ---
 
@@ -22,8 +24,6 @@ Place any number of these attributes on `RedOwlClasses` and it will add a USS cl
   <dt>Names</dt>
   <dd>params string[]</dd>
 </dl>
-
-It can only be placed on: classes
 
 ## Examples
 ---

@@ -15,6 +15,8 @@ parent: Attributes
 
 Place this attribute on `RedOwlClasses` and it will load the UXML file
 
+<blockquote>It can only be placed on: classes</blockquote>
+
 ## Parameters
 ---
 
@@ -22,8 +24,6 @@ Place this attribute on `RedOwlClasses` and it will load the UXML file
   <dt>Path</dt>
   <dd>string (default: "")</dd>
 </dl>
-
-It can only be placed on: classes
 
 ## Examples
 ---

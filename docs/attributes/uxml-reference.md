@@ -15,6 +15,8 @@ parent: Attributes
 
 Use this attribute on `RedOwlClasses` to populate the field with the uxml object loaded from the UXML file using the query system
 
+<blockquote>It can only be placed on: fields</blockquote>
+
 ## Parameters
 ---
 
@@ -22,8 +24,6 @@ Use this attribute on `RedOwlClasses` to populate the field with the uxml object
   <dt>Name</dt>
   <dd>string (default: "")</dd>
 </dl>
-
-It can only be placed on: fields
 
 ## Examples
 ---
