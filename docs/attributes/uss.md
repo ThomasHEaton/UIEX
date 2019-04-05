@@ -1,13 +1,13 @@
 ---
 layout: default
-title: UXML
+title: USS
 parent: Attributes
 nav_order: 1
 ---
 
 <dl>
   <dt>Name</dt>
-  <dd>UXML</dd>
+  <dd>USS</dd>
   <dt>Namespace</dt>
   <dd>RedOwl.Editor</dd>
   <dt>Status</dt>
@@ -27,22 +27,16 @@ It can only be placed on: classes
 ## Examples
 ---
 
-Place this attribute on `RedOwlClasses` and it will load the UXML file `Resources/RedOwl/Demo.uxml`
+Place any number of these attributes on `RedOwlClasses` and it will load the USS file
+
+Optionally if the path given is blank it will build a path from the classes namespace and class name with the suffix `Style`
 
 ```cs
 namespace RedOwl.Demo
 {
-    [UXML("RedOwl/Demo")]
+    [USS, USS("RedOwl/Styles")]
     public class DemoElement : RedOwlVisualElement {}
 }
 ```
 
-If the path given is blank it will build a path from the namespace and class name with a suffix of `Layout` like this `Resources/RedOwl/Demo/DemoElementLayout.uxml`
-
-```cs
-namespace RedOwl.Demo
-{
-    [UXML]
-    public class DemoElement : RedOwlVisualElement {}
-}
-```
+Would load and attach the USS files `Resources/RedOwl/Demo/DemoElementStyle.uss` and `Resources/RedOwl/Styles.uss`
