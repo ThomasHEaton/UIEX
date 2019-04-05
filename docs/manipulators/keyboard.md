@@ -15,7 +15,7 @@ parent: Manipulators
 
 The keyboard filter works much like the mouse filter just with a different interface and set of callbacks available
 
-## Example
+### Example
 ---
 
 ```cs

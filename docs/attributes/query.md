@@ -15,9 +15,9 @@ parent: Attributes
 
 Use this attribute on `RedOwlClasses` methods to provide uQuery functionality in a more buttoned up way by having a function be called when the element is found
 
-<blockquote>It can only be placed on: methods</blockquote>
+<blockquote class="label bg-grey-dk-100">It can only be placed on: methods</blockquote>
 
-## Parameters
+### Parameters
 ---
 
 <dl>
@@ -27,7 +27,7 @@ Use this attribute on `RedOwlClasses` methods to provide uQuery functionality in
   <dd>params string[] (default: null)</dd>
 </dl>
 
-## Examples
+### Examples
 ---
 
 Q - Find a single element and call the function

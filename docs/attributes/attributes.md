@@ -7,5 +7,6 @@ permalink: /docs/attributes
 ---
 
 ## Attributes
+---
 
 These are the attributes provided by the framework

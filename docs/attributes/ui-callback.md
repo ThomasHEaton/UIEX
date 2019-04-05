@@ -15,9 +15,9 @@ parent: Attributes
 
 Use this attribute on `RedOwlClasses` methods to automatically schedule for callback at certain intervals
 
-<blockquote>It can only be placed on: methods</blockquote>
+<blockquote class="label bg-grey-dk-100">It can only be placed on: methods</blockquote>
 
-## Parameters
+### Parameters
 ---
 
 <dl>
@@ -27,7 +27,7 @@ Use this attribute on `RedOwlClasses` methods to automatically schedule for call
   <dd>bool (default: false)</dd>
 </dl>
 
-## Examples
+### Examples
 ---
 
 The first function's attribute is given a "true" argument which tells the system to only schedule the callback once after the delay given

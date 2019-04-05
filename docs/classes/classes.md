@@ -7,6 +7,7 @@ permalink: /docs/classes
 ---
 
 ## Classes
+---
 
 Collectively the following class will be refered to as the `RedOwlClasses` for purposes of understanding what features only work within these classes.
 

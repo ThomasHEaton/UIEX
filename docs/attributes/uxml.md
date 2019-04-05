@@ -15,9 +15,9 @@ parent: Attributes
 
 Place this attribute on `RedOwlClasses` and it will load the UXML file
 
-<blockquote>It can only be placed on: classes</blockquote>
+<blockquote class="label bg-grey-dk-100">It can only be placed on: classes</blockquote>
 
-## Parameters
+### Parameters
 ---
 
 <dl>
@@ -25,7 +25,7 @@ Place this attribute on `RedOwlClasses` and it will load the UXML file
   <dd>string (default: "")</dd>
 </dl>
 
-## Examples
+### Examples
 ---
 
 The first example would load the UXML file `Resources/RedOwl/Demo.uxml`

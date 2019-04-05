@@ -15,9 +15,9 @@ parent: Attributes
 
 Place any number of these attributes on `RedOwlClasses` and it will add a USS class to this element
 
-<blockquote>It can only be placed on: classes</blockquote>
+<blockquote class="label bg-grey-dk-100">It can only be placed on: classes</blockquote>
 
-## Parameters
+### Parameters
 ---
 
 <dl>
@@ -25,7 +25,7 @@ Place any number of these attributes on `RedOwlClasses` and it will add a USS cl
   <dd>params string[]</dd>
 </dl>
 
-## Examples
+### Examples
 ---
 
 The attributes are inherited so the resulting classes on `DemoElement2` would be `["vertical","red","fill"]`

@@ -15,9 +15,9 @@ parent: Attributes
 
 Place any number of these attributes on `RedOwlClasses` and it will load the USS file
 
-<blockquote>It can only be placed on: classes</blockquote>
+<blockquote class="label bg-grey-dk-100">It can only be placed on: classes</blockquote>
 
-## Parameters
+### Parameters
 ---
 
 <dl>
@@ -25,7 +25,7 @@ Place any number of these attributes on `RedOwlClasses` and it will load the USS
   <dd>string (default: "")</dd>
 </dl>
 
-## Examples
+### Examples
 ---
 
 If the path given is blank it will build a path from the classes namespace and class name with the suffix `Style`

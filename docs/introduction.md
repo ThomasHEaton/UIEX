@@ -189,7 +189,7 @@ There are 104 lines of code in the Unity way and there are only 34 in the RedOwl
 
 On top of reducing the redundent code it also help you keep a very clear seperation of concerns, your C# is truely closer to being just business logic instead of being both business logic and ui hookup / input handling hookup code.
 
-<blockquote>But I don't wanna use your base classes!!!</blockquote>
+<blockquote class="label bg-grey-dk-100">But I don't wanna use your base classes!!!</blockquote>
 
 Well then you are in luck, you don't have to - if you looked at the `RedOwlVisualElement` base class you'd notice that its very sparse.  Thats because all that sweet sweet functionality is offloaded into a utility function so you can do this if you need to.
 
