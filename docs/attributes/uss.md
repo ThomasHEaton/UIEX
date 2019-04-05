@@ -20,7 +20,7 @@ nav_order: 1
 <dl>
   <dt>Path</dt>
   <dd>string (default: "")</dd>
-<dl>
+</dl>
 
 It can only be placed on: classes
 

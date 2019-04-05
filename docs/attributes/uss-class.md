@@ -20,7 +20,7 @@ nav_order: 1
 <dl>
   <dt>Names</dt>
   <dd>params string[]</dd>
-<dl>
+</dl>
 
 It can only be placed on: classes
 
