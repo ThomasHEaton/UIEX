@@ -39,20 +39,19 @@ Given these UXML and USS files below the code turns them into an element that ca
 #### The Unity Only Way
 
 ```csharp
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace RedOwl.Demo
-{
-    public class PanManipulator : MouseManipulator
-    {
+namespace RedOwl.Demo {
+    public class PanManipulator : MouseManipulator {
         private Action<Vector2> callback;
 		private Vector2 _mouseStart;
 		private bool _active;
 
-		public PanManipulator(Action<Vector2> callback, params ManipulatorActivationFilter[] filters) : base()
+		public PanManipulator(Action<Vector2> callback, params ManipulatorActivationFilter[] filters)
 		{
             base()
             foreach (var filter in filters)
