@@ -23,8 +23,8 @@
 
 # Introduction
 
-If you want to learn more go check it out [here](https://redowlgames.com/UIEX/introduction)
+If you want to learn more go check out our documentation [here](https://redowlgames.com/UIEX/introduction.html)
 
 # Installation
 
-If you are unsure how to use the new unity package manager with git check it out [here](https://redowlgames.com/UIEX/installation)
+If you are unsure how to use the new unity package manager with git check it out on our documentation [here](https://redowlgames.com/UIEX/installation.html)
