@@ -5,10 +5,13 @@ parent: Attributes
 nav_order: 1
 ---
 
-| Name         | Status                         |
-|:-------------|:-------------------------------|
-| UXML         | Stable {: .label .label-green }|
-| UXML         | <span class="label label-green">Stable</span>|
+---
+Namespace: RedOwl.UIEX
+Name: UXML
+Status: <span class="label label-green">Stable</span>
+---
+
+## Examples
 
 Place this attribute on any `RedOwlClasses` and it will load the UXML file
 
