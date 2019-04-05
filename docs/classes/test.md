@@ -1,3 +1,10 @@
+---
+layout: default
+title: Test
+parent: Classes
+nav_order: 1
+---
+
 ## Classes
 
 Collectively the following class will be refered to as the `RedOwlClasses` for purposes of understanding what features only work within these classes
