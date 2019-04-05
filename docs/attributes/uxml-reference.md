@@ -7,7 +7,7 @@ nav_order: 1
 
 <dl>
   <dt>Name</dt>
-  <dd>UXMLReferenc</dd>
+  <dd>UXMLReference</dd>
   <dt>Namespace</dt>
   <dd>RedOwl.Editor</dd>
   <dt>Status</dt>
