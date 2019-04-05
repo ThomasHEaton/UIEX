@@ -7,4 +7,4 @@ icon:
 color: green
 sections:
   - /classes/test
-  ---
+---
