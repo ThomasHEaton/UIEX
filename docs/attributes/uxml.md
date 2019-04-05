@@ -5,10 +5,9 @@ parent: Attributes
 nav_order: 1
 ---
 
----
-Namespace: RedOwl.UIEX
-Name: UXML
-Status: <span class="label label-green">Stable</span>
+#### *Namespace:* RedOwl.UIEX
+#### *Name:* UXML
+#### *Status:* <span class="label label-green">Stable</span>
 ---
 
 ## Examples
