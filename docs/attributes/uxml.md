@@ -2,7 +2,6 @@
 layout: default
 title: UXML
 parent: Attributes
-nav_order: 1
 ---
 
 <dl>
@@ -13,6 +12,8 @@ nav_order: 1
   <dt>Status</dt>
   <dd><span class="label label-green">Stable</span></dd>
 </dl>
+
+Place this attribute on `RedOwlClasses` and it will load the UXML file
 
 ## Parameters
 ---
@@ -27,7 +28,7 @@ It can only be placed on: classes
 ## Examples
 ---
 
-Place this attribute on `RedOwlClasses` and it will load the UXML file `Resources/RedOwl/Demo.uxml`
+The first example would load the UXML file `Resources/RedOwl/Demo.uxml`
 
 ```cs
 namespace RedOwl.Demo

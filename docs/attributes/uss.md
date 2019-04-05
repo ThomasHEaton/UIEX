@@ -2,7 +2,6 @@
 layout: default
 title: USS
 parent: Attributes
-nav_order: 1
 ---
 
 <dl>
@@ -13,6 +12,8 @@ nav_order: 1
   <dt>Status</dt>
   <dd><span class="label label-green">Stable</span></dd>
 </dl>
+
+Place any number of these attributes on `RedOwlClasses` and it will load the USS file
 
 ## Parameters
 ---
@@ -27,9 +28,9 @@ It can only be placed on: classes
 ## Examples
 ---
 
-Place any number of these attributes on `RedOwlClasses` and it will load the USS file
+If the path given is blank it will build a path from the classes namespace and class name with the suffix `Style`
 
-Optionally if the path given is blank it will build a path from the classes namespace and class name with the suffix `Style`
+The following example would load and attach the USS files `Resources/RedOwl/Demo/DemoElementStyle.uss` and `Resources/RedOwl/Styles.uss`
 
 ```cs
 namespace RedOwl.Demo
@@ -38,5 +39,3 @@ namespace RedOwl.Demo
     public class DemoElement : RedOwlVisualElement {}
 }
 ```
-
-Would load and attach the USS files `Resources/RedOwl/Demo/DemoElementStyle.uss` and `Resources/RedOwl/Styles.uss`

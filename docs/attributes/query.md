@@ -2,7 +2,6 @@
 layout: default
 title: Query
 parent: Attributes
-nav_order: 1
 ---
 
 <dl>
@@ -13,6 +12,8 @@ nav_order: 1
   <dt>Status</dt>
   <dd><span class="label label-yellow">Beta</span></dd>
 </dl>
+
+Use this attribute on `RedOwlClasses` methods to provide uQuery functionality in a more buttoned up way by having a function be called when the element is found
 
 ## Parameters
 ---
@@ -28,8 +29,6 @@ It can only be placed on: methods
 
 ## Examples
 ---
-
-Use this attribute on `RedOwlClasses` methods to provide uQuery functionality in a more buttoned up way by having a function be called when the element is found
 
 Q - Find a single element and call the function
 Query - Find multiple elements and call the function for each

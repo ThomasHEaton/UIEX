@@ -2,7 +2,6 @@
 layout: default
 title: UICallback
 parent: Attributes
-nav_order: 1
 ---
 
 <dl>
@@ -13,6 +12,8 @@ nav_order: 1
   <dt>Status</dt>
   <dd><span class="label label-green">Stable</span></dd>
 </dl>
+
+Use this attribute on `RedOwlClasses` methods to automatically schedule for callback at certain intervals
 
 ## Parameters
 ---
@@ -29,7 +30,7 @@ It can only be placed on: methods
 ## Examples
 ---
 
-Use this attribute on `RedOwlClasses` methods to automatically schedule for callback at certain intervals
+The first function's attribute is given a "true" argument which tells the system to only schedule the callback once after the delay given
 
 ```cs
 namespace RedOwl.Demo
@@ -44,5 +45,3 @@ namespace RedOwl.Demo
     }
 }
 ```
-
-The first function's attribute is given a "true" argument which tells the system to only schedule the callback once after the delay given

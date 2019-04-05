@@ -2,7 +2,6 @@
 layout: default
 title: UXMLReference
 parent: Attributes
-nav_order: 1
 ---
 
 <dl>
@@ -13,6 +12,8 @@ nav_order: 1
   <dt>Status</dt>
   <dd><span class="label label-yellow">Beta</span></dd>
 </dl>
+
+Place any number of these attributes on `RedOwlClasses` and it will add a USS class to this element
 
 ## Parameters
 ---
@@ -27,7 +28,7 @@ It can only be placed on: classes
 ## Examples
 ---
 
-Place any number of these attributes on `RedOwlClasses` and it will add a USS class to this element
+The attributes are inherited so the resulting classes on `DemoElement2` would be `["vertical","red","fill"]`
 
 ```cs
 namespace RedOwl.Demo
@@ -39,5 +40,3 @@ namespace RedOwl.Demo
     public class DemoElement2 : DemoElement {}
 }
 ```
-
-The attributes are inherited so the resulting classes on `DemoElement2` would be `["vertical","red","fill"]`
