@@ -6,11 +6,11 @@ nav_order: 1
 ---
 
 <dl>
-  <dt>Name</dt>
+  <dt class="bg-grey-dk-000">Name</dt>
   <dd>UXML</dd>
-  <dt>Namespace</dt>
+  <dt class="bg-grey-dk-000">Namespace</dt>
   <dd>RedOwl.Editor</dd>
-  <dt>Status</dt>
+  <dt class="bg-grey-dk-000">Status</dt>
   <dd><span class="label label-green">Stable</span></dd>
 </dl>
 
