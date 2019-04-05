@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Red Owl Editor Window
+title: Editor Window
 parent: Classes
 ---
 

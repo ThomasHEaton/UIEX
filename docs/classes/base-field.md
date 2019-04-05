@@ -1,19 +1,19 @@
 ---
 layout: default
-title: Red Owl Asset Editor
+title: Base Field
 parent: Classes
 ---
 
 <dl>
   <dt>Name</dt>
-  <dd>RedOwlAssetEditor</dd>
+  <dd>RedOwlBaseField</dd>
   <dt>Namespace</dt>
   <dd>RedOwl.Editor</dd>
   <dt>Status</dt>
   <dd><span class="label label-yellow">Beta</span></dd>
 </dl>
 
-This class is inteded to provide some Quality of Life improvements when writing an editor window for scriptable objects
+This is an abstract base class that derives from unity's `BaseField<T> which is a VisualElement that works for a specific type.
 
 ## Constructors
 ---

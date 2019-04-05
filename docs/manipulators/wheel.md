@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Red Owl Wheel Manipulator
+title: Wheel
 parent: Manipulators
 ---
 

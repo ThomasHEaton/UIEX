@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Red Owl Keyboard Manipulator
+title: Keyboard
 parent: Manipulators
 ---
 

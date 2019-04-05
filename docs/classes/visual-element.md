@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Red Owl Visual Element
+title: Visual Element
 parent: Classes
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Red Owl Mouse Manipulator
+title: Mouse
 parent: Manipulators
 ---
 

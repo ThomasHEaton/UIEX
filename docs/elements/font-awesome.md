@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Red Owl Base Field
-parent: Classes
+title: Font Awesome
+parent: Custom Elements
 ---
 
 <dl>
