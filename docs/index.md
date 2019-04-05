@@ -7,9 +7,6 @@ The following documentation assumes you have a little bit of familiarity with c#
 
 Collectively the following class will be refered to as the `RedOwlClasses` for purposes of understanding what features only work within these classes
 
-<details>
-  <summary>Classes Documentation</summary><p>
-
 ### RedOwlVisualElement (Gold)
 
 This is an abstract base class that derives from `VisualElement` and takes care of all the boiler plate for UIElements - The class is so stupidly simple that i'm going to link it here for you to go read, trust me its really short [so go read it](https://github.com/rocktavious/UIEX/blob/master/Assets/RedOwl/Editor/UIEX/RedOwlVisualElement.cs)
@@ -35,8 +32,6 @@ This class is inteded to provide some Quality of Life improvements when writing 
 This class bring together the RedOwlUtils functions into a Unity EditorWindow class that builds its UI using UIElements.  This class is still under heavy development so i won't document it here yet, but it has a few Quailty of Life improvements that make working with editor windows much much easier - go read the code if you want to know more!
 
 Almost all of the example code in this readme is deriving from `RedOwlVisualElement` but anything you can do with that class you can do with this class just the same.
-
-</p></details>
 
 ## Attributes
 
