@@ -166,7 +166,7 @@
 }
 
 .TexturePreview > * {
-    border-color: rgb(20, 20, 20);
+    border-color: rgb(40, 40, 40);
     border-left-width: 0.5;
     border-top-width: 0.5;
     border-right-width: 0.5;
