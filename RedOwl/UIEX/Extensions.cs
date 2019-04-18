@@ -4,11 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_2019_1_OR_NEWER
 using UnityEngine.UIElements;
-#else
-using UnityEngine.Experimental.UIElements;
-#endif
 
 namespace RedOwl.Editor
 {
@@ -90,7 +86,7 @@ namespace RedOwl.Editor
             {
                 self.AppendAction(value.ToString(),
                     a => { callback.Invoke(value); },
-                    a => { return statusCallback.Invoke(value) ? DropdownMenu.MenuAction.StatusFlags.Checked : DropdownMenu.MenuAction.StatusFlags.Normal; });
+                    a => { return statusCallback.Invoke(value) ? DropdownMenuAction.Status.Checked : DropdownMenuAction.Status.Normal; });
             }
             callback.Invoke(initialValue);
         }

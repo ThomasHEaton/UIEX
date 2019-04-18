@@ -28,3 +28,5 @@ If you want to learn more go check out our documentation [here](https://redowlga
 # Installation
 
 If you are unsure how to use the new unity package manager with git check it out on our documentation [here](https://redowlgames.com/UIEX/installation.html)
+
+# Contributing

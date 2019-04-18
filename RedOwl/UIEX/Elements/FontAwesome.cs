@@ -3,13 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-#if UNITY_2019_1_OR_NEWER
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
-#else
-using UnityEngine.Experimental.UIElements;
-using UnityEditor.Experimental.UIElements;
-#endif
 
 namespace RedOwl.Editor
 {

@@ -1,11 +1,7 @@
 ﻿#pragma warning disable 0649 // UXMLReference variable declared but not assigned.
 using UnityEngine;
 using UnityEditor;
-#if UNITY_2019_1_OR_NEWER
 using UnityEngine.UIElements;
-#else
-using UnityEngine.Experimental.UIElements;
-#endif
 
 namespace RedOwl.Editor
 {

@@ -5,8 +5,8 @@ namespace RedOwl.Editor
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 	public class QAttribute : Attribute
 	{
-        public string name;
-        public string[] classes;
+		public string name;
+		public string[] classes;
 		
 		public QAttribute(string name = null, params string[] classes)
 		{

@@ -3,13 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-#if UNITY_2019_1_OR_NEWER
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
-#else
-using UnityEngine.Experimental.UIElements;
-using UnityEditor.Experimental.UIElements;
-#endif
 
 namespace RedOwl.Editor
 {
@@ -54,7 +49,7 @@ namespace RedOwl.Editor
 		private void CreateUI()
 		{
 			label.text = ObjectNames.NicifyVariableName(label.text);
-			label.style.positionTop = (this.layout.height * 0.5f) - 10f;
+			//label.style.position = (this.layout.height * 0.5f) - 10f;
 		}
 	}
 }

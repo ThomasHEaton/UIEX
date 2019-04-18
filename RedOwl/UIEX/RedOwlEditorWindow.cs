@@ -3,13 +3,8 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 using UnityEditor;
-#if UNITY_2019_1_OR_NEWER
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
-#else
-using UnityEngine.Experimental.UIElements;
-using UnityEditor.Experimental.UIElements;
-#endif
 
 namespace RedOwl.Editor
 {
@@ -91,9 +86,7 @@ namespace RedOwl.Editor
         internal void Initialize()
         {
             if (IsInitalized) return;
-            Root = this.GetRootVisualContainer();
-            Root.focusIndex = 0;
-            Root.RegisterCallback<MouseEnterEvent>(e => { instance.Focus(); });
+            rootVisualElement.RegisterCallback<MouseEnterEvent>(e => { instance.Focus(); });
             RedOwlUtils.Setup(this, Root);
             BuildUI();
             IsInitalized = true;

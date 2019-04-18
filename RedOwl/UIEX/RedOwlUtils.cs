@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-#if UNITY_2019_1_OR_NEWER
 using UnityEngine.UIElements;
-#else
-using UnityEngine.Experimental.UIElements;
-#endif
 
 namespace RedOwl.Editor
 {
@@ -57,7 +53,7 @@ namespace RedOwl.Editor
                 if (layout != null)
                 {
                     //Debug.LogFormat("Loading '{0}.uxml' for '{1}'", path, instance.GetType().Name);
-                    layout.CloneTree(element, null);
+                    layout.CloneTree(element);
                 }
             },
             false);
@@ -68,7 +64,7 @@ namespace RedOwl.Editor
             instance.GetType().WithAttr<USSAttribute>((attr) => {
                 string path = GetUSSPath(instance, attr.path);
                 //Debug.LogFormat("Adding '{0}.uss' to '{1}'", path, instance.GetType().Name);
-                element.AddStyleSheetPath(path);
+                element.styleSheets.Add(Resources.Load<StyleSheet>(path));
             },
             true);
         }
