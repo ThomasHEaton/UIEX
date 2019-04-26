@@ -87,7 +87,7 @@ namespace RedOwl.Editor
         {
             if (IsInitalized) return;
             rootVisualElement.RegisterCallback<MouseEnterEvent>(e => { instance.Focus(); });
-            RedOwlUtils.Setup(this, Root);
+            RedOwlUtils.Setup(this, rootVisualElement);
             BuildUI();
             IsInitalized = true;
         }

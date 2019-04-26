@@ -117,7 +117,6 @@
     padding-left: 3px;
     padding-right: 3px;
     overflow: visible;
-    display:inline-block;
     font-style:normal;
     font-variant:normal;
     text-rendering:auto;
@@ -176,4 +175,11 @@
 .LabelX #label {
     margin-left: 0;
     margin-right: 0;
+}
+
+.undo-unity-toolbar-button {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    background-image: none;
 }
