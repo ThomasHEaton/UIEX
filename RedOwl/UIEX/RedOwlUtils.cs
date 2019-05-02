@@ -143,9 +143,11 @@ namespace RedOwl.Editor
             instance.ForMethodWithAttr<T, UICallbackAttribute>((info, attr) => {
                 if (attr.once)
                 {
+                    Debug.LogFormat("Adding Callback '{0}' to '{1}' once after {2} milliseconds", info, instance.GetType().Name, attr.interval);
                     element.schedule.Execute(() => {info.Invoke(instance, null);}).StartingIn(attr.interval);
                 } else {
-                    element.schedule.Execute(() => {info.Invoke(instance, null);}).Every(attr.interval);
+                    Debug.LogFormat("Adding Callback '{0}' to '{1}' every {2} milliseconds", info, instance.GetType().Name, attr.interval);
+                    element.schedule.Execute(() => {info.Invoke(instance, null);}).Every(attr.interval).Resume();
                 }
             },
             false);

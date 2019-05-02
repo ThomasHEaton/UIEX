@@ -40,8 +40,8 @@ namespace RedOwl.Demo
     {
         FontAwesome obj;
 
-        [UICallback(1, true)]
-        void InitializeUI() {
+        public DemoElement() : base()
+        {
             obj = new FontAwesome("solid", "fa-chevron-right")
             Add(obj);
         }

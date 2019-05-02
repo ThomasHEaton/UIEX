@@ -1,15 +1,14 @@
-﻿using System;
-using UnityEngine;
+using System;
 using UnityEngine.UIElements;
 
 namespace RedOwl.Editor
 {
     [USS("RedOwl/Editor/Styles")]
-    public abstract class RedOwlVisualElement : VisualElement
-    {				
+    public abstract class RedOwlBaseField<T> : BaseField<T>
+    {
         public bool IsInitalized { get; protected set; }
         
-        public RedOwlVisualElement()
+        public RedOwlBaseField() : base("", null)
         {
             if (IsInitalized) return;
             RedOwlUtils.Setup(this, this);

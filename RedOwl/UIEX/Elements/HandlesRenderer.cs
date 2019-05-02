@@ -20,17 +20,14 @@ namespace RedOwl.Editor
 		
 		private IMGUIContainer container;
 		
-		public HandlesRenderer() : base() {}
-		
-		public void Load(IHandlesBezier data) { this.data = data; }
-	    
-		[UICallback(1, true)]
-		private void CreateUI()
+		public HandlesRenderer() : base()
 		{
 			container = new IMGUIContainer(UpdateUI);
 			container.style.overflow = Overflow.Visible;
 			Add(container);
 		}
+		
+		public void Load(IHandlesBezier data) { this.data = data; }
 	    
 		private void UpdateUI()
 		{

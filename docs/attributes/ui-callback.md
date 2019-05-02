@@ -37,9 +37,6 @@ namespace RedOwl.Demo
 {
     public class DemoElement : RedOwlVisualElement
     {
-        [UICallback(1, true)]
-        void InitializeUI() { Debug.Log("Will only be called once after a 1ms delay!"); }
-
         [UICallback(100)]
         void UpdateUI() { Debug.Log("Will be called every 100ms!"); }
     }

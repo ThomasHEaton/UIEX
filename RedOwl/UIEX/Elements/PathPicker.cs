@@ -31,15 +31,7 @@ namespace RedOwl.Editor
 		}
 		public string fullPath { get; protected set; }
 		
-		public PathPicker() : base() {}
-		
-		public void Init(PathPickerTypes pickerType)
-		{
-			PickerType = pickerType;
-		}
-		
-		[UICallback(1, true)]
-		private void InitUI()
+		public PathPicker() : base()
 		{
 			button.clickable.clicked += OpenPicker;
 		}

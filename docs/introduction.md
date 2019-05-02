@@ -207,11 +207,6 @@ public class DemoElement : VisualElement, IOnMouse
     public DemoElement()
     {
         RedOwlUtils.Setup(this, this);  //Here is where the magic happens
-    }
- 
-    [UICallback(1, true)]
-    private void InitUI()
-    {
         frame = new VisualElement();
     }
  

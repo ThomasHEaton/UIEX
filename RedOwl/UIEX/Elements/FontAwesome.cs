@@ -54,15 +54,16 @@ namespace RedOwl.Editor
         {
             _type = "solid";
             _icon = icon;
+            UpdateIcon();
         }
 
         public FontAwesome(string type, string icon)
         {
             _type = type;
             _icon = icon;
+            UpdateIcon();
         }
 
-        [UICallback(1, true)]
         private void UpdateIcon()
         {
             RemoveFromClassList("textElement");

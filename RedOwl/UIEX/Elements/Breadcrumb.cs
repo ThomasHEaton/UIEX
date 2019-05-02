@@ -25,11 +25,6 @@ namespace RedOwl.Editor
 			this.index = index;
             this.text = text;
 			this.callback = callback;
-		}
-
-		[UICallback(1, true)]
-		private void ConfigureUI()
-		{
 			button.text = text;
 			button.clickable.clicked += () => { callback(index); };
 		}
