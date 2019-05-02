@@ -27,7 +27,7 @@ namespace RedOwl.Editor
             }
         }
         
-        protected static void EnsureWindow(WindowDockStyles dockStyle = WindowDockStyles.Docked, int width = 600, int height = 400)
+        protected static T EnsureWindow(WindowDockStyles dockStyle = WindowDockStyles.Docked, int width = 600, int height = 400)
         {
             if (_instance == null)
             {
@@ -51,21 +51,24 @@ namespace RedOwl.Editor
                 if (_instance != null)
                 {
                     _instance.titleContent = new GUIContent(instance.GetWindowTitle());
-                    _instance.Initialize();
                     _instance.Repaint();
                 }
             }
+            return _instance;
         }
         
         public abstract string GetWindowTitle();
         
         public bool IsInitalized { get; protected set; }
-
-        protected VisualElement Root { get; set; }
         
         protected virtual void OnEnable()
         {
             AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
+            if (IsInitalized) return;
+            rootVisualElement.RegisterCallback<MouseEnterEvent>(e => { instance.Focus(); });
+            RedOwlUtils.Setup(this, rootVisualElement);
+            BuildUI();
+            IsInitalized = true;
         }
 
         protected virtual void OnDisable()
@@ -76,20 +79,6 @@ namespace RedOwl.Editor
         public void OnBeforeAssemblyReload()
         {
             IsInitalized = false;
-        }
-        
-        public void OnGUI()
-        {
-            Initialize();
-        }
-        
-        internal void Initialize()
-        {
-            if (IsInitalized) return;
-            rootVisualElement.RegisterCallback<MouseEnterEvent>(e => { instance.Focus(); });
-            RedOwlUtils.Setup(this, rootVisualElement);
-            BuildUI();
-            IsInitalized = true;
         }
         
         protected virtual void BuildUI() {}
