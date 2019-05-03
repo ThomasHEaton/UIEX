@@ -59,11 +59,12 @@ namespace RedOwl.Editor
 	public class RedOwlKeyboardManipulator : Manipulator
 	{
 		private KeyboardFilter[] filters;
-		public KeyboardFilter currentFilter { get; private set; }
+		private List<KeyboardFilter> activeFilters;
 
 		public RedOwlKeyboardManipulator(params KeyboardFilter[] filters)
 		{
 			this.filters = filters;
+			activeFilters = new List<KeyboardFilter>(filters.Length);
 		}
 		
 		protected override void RegisterCallbacksOnTarget()
@@ -94,32 +95,48 @@ namespace RedOwl.Editor
 			evt.StopPropagation();
 		}
 		
-		protected void OnKeyDown(KeyDownEvent evt)
+		private void OnKeyDown(KeyDownEvent evt)
 		{
-			if (CanStartManipulation(evt) && currentFilter.OnDown != null) currentFilter.OnDown(evt);
+			if (CanStartManipulation(evt))
+				withActiveFilters(f => { if (f.OnDown != null) f.OnDown(evt); });
 		}
 
-		protected void OnKeyUp(KeyUpEvent evt)
+		private void OnKeyUp(KeyUpEvent evt)
 		{
-			if (!CanStopManipulation(evt) && currentFilter.OnUp != null) currentFilter.OnUp(evt);
+			if (!CanStopManipulation(evt))
+				withActiveFilters(f => { if (f.OnUp != null) f.OnUp(evt); });
 		}
 
 		private bool CanStartManipulation(IKeyboardEvent evt)
 		{
+			activeFilters.Clear();
 			foreach (var filter in filters)
 			{
 				if (filter.Matches(evt))
 				{
-					currentFilter = filter;
-					return true;
+					activeFilters.Add(filter);
 				}
 			}
+			if (activeFilters.Count > 0) return true;
 			return false;
+		}
+
+		private void withActiveFilters(Action<KeyboardFilter> callback)
+		{
+			foreach (var filter in activeFilters)
+			{
+				callback(filter);
+			}
 		}
 
 		private bool CanStopManipulation(IKeyboardEvent e)
 		{
-			return (e.keyCode == currentFilter.key);
+			foreach (var filter in activeFilters)
+			{
+				if (e.keyCode == filter.key)
+					return true;
+			}
+			return false;
 		}
 	}
 }

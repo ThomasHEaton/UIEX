@@ -70,7 +70,7 @@ namespace RedOwl.Editor
 	{
 		private bool isContentDragger;
 		private MouseFilter[] filters;
-		public MouseFilter currentFilter { get; private set; }
+		private List<MouseFilter> activeFilters;
 		
 		private Vector2 _start;
 		private bool _active;
@@ -79,6 +79,7 @@ namespace RedOwl.Editor
 		{
 			this.isContentDragger = isContentDragger;
 			this.filters = filters;
+			this.activeFilters = new List<MouseFilter>(filters.Length);
 			_active = false;
 		}
 		
@@ -124,7 +125,7 @@ namespace RedOwl.Editor
 			}
 		}
 		
-		protected void OnMouseDown(MouseDownEvent evt)
+		private void OnMouseDown(MouseDownEvent evt)
 		{
 			if (_active)
 			{
@@ -137,58 +138,74 @@ namespace RedOwl.Editor
 				_active = true;
 				target.CaptureMouse();
 				_start = evt.localMousePosition;
-				if (currentFilter.OnDown != null) currentFilter.OnDown(evt);
+				withActiveFilters(f => { if (f.OnDown != null) f.OnDown(evt); });
 				evt.StopImmediatePropagation();
 			}
 		}
 
-		protected void OnMouseMove(MouseMoveEvent evt)
+		private void OnMouseMove(MouseMoveEvent evt)
 		{
 			if (!_active || !target.HasMouseCapture()) return;
-			if (currentFilter.OnMove != null)
-			{
-				VisualElement element = evt.target as VisualElement;
-				if (element != null)
-				{
-					Vector2 diff = evt.localMousePosition - _start;
-					if (isContentDragger == false)
-					{
-						diff.x *= element.transform.scale.x;
-						diff.y *= element.transform.scale.y;
-					}
-					currentFilter.OnMove(evt, (Vector3)diff);
-				}
-			}
+			withActiveFilters(f => { if (f.OnMove != null) HandleMoveFilter(f, evt); });
 			if (isContentDragger)
 				_start = evt.localMousePosition;
 			evt.StopPropagation();
 		}
 
-		protected void OnMouseUp(MouseUpEvent evt)
+		private void HandleMoveFilter(MouseFilter filter, MouseMoveEvent evt)
+		{
+			VisualElement element = evt.target as VisualElement;
+			if (element != null)
+			{
+				Vector2 diff = evt.localMousePosition - _start;
+				if (isContentDragger == false)
+				{
+					diff.x *= element.transform.scale.x;
+					diff.y *= element.transform.scale.y;
+				}
+				filter.OnMove(evt, (Vector3)diff);
+			}
+		}
+
+		private void OnMouseUp(MouseUpEvent evt)
 		{
 			if (!_active || !target.HasMouseCapture() || !CanStopManipulation(evt)) return;
 			target.ReleaseMouse();
 			_active = false;
-			if (currentFilter.OnUp != null) currentFilter.OnUp(evt);
+			withActiveFilters(f => { if (f.OnUp != null) f.OnUp(evt); });
 			evt.StopPropagation();
 		}
 
-		protected bool CanStartManipulation(IMouseEvent evt)
+		private bool CanStartManipulation(IMouseEvent evt)
 		{
+			activeFilters.Clear();
 			foreach (var filter in filters)
 			{
 				if (filter.Matches(evt))
 				{
-					currentFilter = filter;
-					return true;
+					activeFilters.Add(filter);
 				}
 			}
+			if (activeFilters.Count > 0) return true;
 			return false;
 		}
 
-		protected bool CanStopManipulation(IMouseEvent e)
+		private void withActiveFilters(Action<MouseFilter> callback)
 		{
-			return ((MouseButton)e.button == currentFilter.button);
+			foreach (var filter in activeFilters)
+			{
+				callback(filter);
+			}
+		}
+
+		private bool CanStopManipulation(IMouseEvent e)
+		{
+			foreach (var filter in activeFilters)
+			{
+				if ((MouseButton)e.button == filter.button)
+					return true;
+			}
+			return false;
 		}
 	}
 }
