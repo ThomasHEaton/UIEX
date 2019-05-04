@@ -40,11 +40,12 @@ namespace RedOwl.Editor
 			Vector2 startTangent = Vector2.right;
 			Vector2 end;
 			Vector2 endTangent = Vector2.left;
-			float factor = 40;
+			float factor = 1f;
 			foreach (var point in data.GetBezierPoints())
 			{
 				start = container.WorldToLocal(point.Item1);
 				end = container.WorldToLocal(point.Item2);
+				factor = Mathf.Abs(end.x - start.x) * 0.5f;
 				//TODO: Turn this into a 2 curve drawing where you draw from
 				// start to midpoint and then end to midpoint where midpoint is end - start
 				Handles.DrawBezier(
