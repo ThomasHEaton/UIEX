@@ -4,19 +4,13 @@ title: Wheel
 parent: Manipulators
 ---
 
-<dl>
-  <dt>Name</dt>
-  <dd>RedOwlWheelManipulator</dd>
-  <dt>Namespace</dt>
-  <dd>RedOwl.Editor</dd>
-  <dt>Status</dt>
-  <dd><span class="label label-yellow">Beta</span></dd>
-</dl>
+# wheel
+
+NameRedOwlWheelManipulatorNamespaceRedOwl.EditorStatusBeta
 
 The wheel manipulator is slightly different then the previous 2 because there is really no configuration you need to pass in - all you care about is which direction the wheel is turned, right?
 
-### Example
----
+## Example
 
 ```csharp
 public class DemoElement : RedOwlVisualElement, IOnWheel
@@ -30,7 +24,7 @@ public class DemoElement : RedOwlVisualElement, IOnWheel
 
 The `wheelDelta` data will be constrained to values `0`, `1`, or `-1` to make building actions off this easier
 
-There is also another variation of the wheel manipulator callback that is specifically designed for zooming actions because it provides you with `scale` data that can be fed directly into the UIElements transforms to scale (or zoom) them in and out
+There is also another variation of the wheel manipulator callback that is specifically designed for zooming actions because it provides you with `scale` data that can be fed directly into the UIElements transforms to scale \(or zoom\) them in and out
 
 ```csharp
 [UXML]
@@ -42,10 +36,11 @@ public class DemoElement : RedOwlVisualElement, IOnZoom
     public float zoomMinScale { get { return 0.2f; } }
     public float zoomMaxScale { get { return 15f; } }
     public float zoomScaleStep { get { return 0.15f; } }
-    public EventModifiers zoomActivationModifiers { get { return EventModifiers.None; } }		
+    public EventModifiers zoomActivationModifiers { get { return EventModifiers.None; } }        
     public void OnZoom(WheelEvent evt, Vector3 scale)
     {
         frame.transform.scale = scale;
     }
 }
 ```
+

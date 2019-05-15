@@ -4,29 +4,19 @@ title: UXMLReference
 parent: Attributes
 ---
 
-<dl>
-  <dt>Name</dt>
-  <dd>USSClass</dd>
-  <dt>Namespace</dt>
-  <dd>RedOwl.Editor</dd>
-  <dt>Status</dt>
-  <dd><span class="label label-yellow">Beta</span></dd>
-</dl>
+# uss-class
+
+NameUSSClassNamespaceRedOwl.EditorStatusBeta
 
 Place any number of these attributes on `RedOwlClasses` and it will add a USS class to this element
 
-<blockquote class="label bg-grey-dk-100">It can only be placed on: classes</blockquote>
+> It can only be placed on: classes
 
-### Parameters
----
+## Parameters
 
-<dl>
-  <dt>Names</dt>
-  <dd>params string[]</dd>
-</dl>
+Namesparams string\[\]
 
-### Examples
----
+## Examples
 
 The attributes are inherited so the resulting classes on `DemoElement2` would be `["vertical","red","fill"]`
 
@@ -40,3 +30,4 @@ namespace RedOwl.Demo
     public class DemoElement2 : DemoElement {}
 }
 ```
+

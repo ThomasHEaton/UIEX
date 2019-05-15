@@ -4,25 +4,21 @@ title: Base Field
 parent: Classes
 ---
 
-<dl>
-  <dt>Name</dt>
-  <dd>RedOwlBaseField</dd>
-  <dt>Namespace</dt>
-  <dd>RedOwl.Editor</dd>
-  <dt>Status</dt>
-  <dd><span class="label label-yellow">Beta</span></dd>
-</dl>
+# base-field
 
-This is an abstract base class that derives from unity's `BaseField<T> which is a VisualElement that works for a specific type.
+NameRedOwlBaseFieldNamespaceRedOwl.EditorStatusBeta
 
-### Constructors
----
+This is an abstract base class that derives from unity's \`BaseField which is a VisualElement that works for a specific type.
+
+## Constructors
+
 TBD
 
-### Fields & Properties
----
+## Fields & Properties
+
 TBD
 
-### Methods
----
+## Methods
+
 TBD
+

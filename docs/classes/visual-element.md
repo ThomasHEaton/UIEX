@@ -4,40 +4,23 @@ title: Visual Element
 parent: Classes
 ---
 
-<dl>
-  <dt>Name</dt>
-  <dd>RedOwlVisualElement</dd>
-  <dt>Namespace</dt>
-  <dd>RedOwl.Editor</dd>
-  <dt>Status</dt>
-  <dd><span class="label label-green">Stable</span></dd>
-</dl>
+# visual-element
+
+NameRedOwlVisualElementNamespaceRedOwl.EditorStatusStable
 
 This is an abstract base class that derives from `VisualElement`
 
-### Constructors
----
+## Constructors
 
+## Fields & Properties
 
+IsInitializedbool
 
-### Fields & Properties
----
+## Methods
 
-<dl>
-  <dt>IsInitialized</dt>
-  <dd>bool</dd>
-</dl>
+BuildUIA virtual method you can override to implement ui building logic at the right lifecycle time
 
-### Methods
----
-
-<dl>
-  <dt>BuildUI</dt>
-  <dd>A virtual method you can override to implement ui building logic at the right lifecycle time</dd>
-</dl>
-
-### Examples
----
+## Examples
 
 ```csharp
 using UnityEngine.UIElements;
@@ -58,3 +41,4 @@ namespace RedOwl.Demo
     }
 }
 ```
+

@@ -2,8 +2,7 @@
 layout: default
 ---
 
-## Quickstart
----
+# Quickstart
 
 I like your style - lets do this!
 
@@ -13,6 +12,5 @@ I like your style - lets do this!
 * ...
 * Profit!
 
-### Example
----
+## Example
 
