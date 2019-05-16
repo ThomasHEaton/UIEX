@@ -4,19 +4,29 @@ title: UXML
 parent: Attributes
 ---
 
-# uxml
-
-NameUXMLNamespaceRedOwl.EditorStatusStable
+<dl>
+  <dt>Name</dt>
+  <dd>UXML</dd>
+  <dt>Namespace</dt>
+  <dd>RedOwl.Editor</dd>
+  <dt>Status</dt>
+  <dd><span class="label label-green">Stable</span></dd>
+</dl>
 
 Place this attribute on `RedOwlClasses` and it will load the UXML file
 
-> It can only be placed on: classes
+<blockquote class="label bg-grey-dk-100">It can only be placed on: classes</blockquote>
 
-## Parameters
+### Parameters
+---
 
-Pathstring \(default: ""\)
+<dl>
+  <dt>Path</dt>
+  <dd>string (default: "")</dd>
+</dl>
 
-## Examples
+### Examples
+---
 
 The first example would load the UXML file `Resources/RedOwl/Demo.uxml`
 
@@ -37,4 +47,3 @@ namespace RedOwl.Demo
     public class DemoElement : RedOwlVisualElement {}
 }
 ```
-

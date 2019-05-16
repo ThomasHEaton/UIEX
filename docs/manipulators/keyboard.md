@@ -4,13 +4,19 @@ title: Keyboard
 parent: Manipulators
 ---
 
-# keyboard
-
-NameRedOwlKeyboardManipulatorNamespaceRedOwl.EditorStatusBeta
+<dl>
+  <dt>Name</dt>
+  <dd>RedOwlKeyboardManipulator</dd>
+  <dt>Namespace</dt>
+  <dd>RedOwl.Editor</dd>
+  <dt>Status</dt>
+  <dd><span class="label label-yellow">Beta</span></dd>
+</dl>
 
 The keyboard filter works much like the mouse filter just with a different interface and set of callbacks available
 
-## Example
+### Example
+---
 
 ```csharp
 public class DemoElement : RedOwlVisualElement, IOnKeyboard
@@ -40,4 +46,3 @@ public class DemoElement : RedOwlVisualElement, IOnKeyboard
     }
 }
 ```
-

@@ -4,28 +4,33 @@ title: Font Awesome
 parent: Custom Elements
 ---
 
-# font-awesome
+<dl>
+  <dt>Name</dt>
+  <dd>FontAwesome</dd>
+  <dt>Namespace</dt>
+  <dd>RedOwl.Editor</dd>
+  <dt>Status</dt>
+  <dd><span class="label label-green">Stable</span></dd>
+</dl>
 
-NameFontAwesomeNamespaceRedOwl.EditorStatusStable
+This custom element allows you to use FontAwesome icons (free only) in your unity editor ui's - https://fontawesome.com
 
-This custom element allows you to use FontAwesome icons \(free only\) in your unity editor ui's - [https://fontawesome.com](https://fontawesome.com)
-
-## Constructors
-
+### Constructors
+---
 TBD
 
-## Fields & Properties
-
+### Fields & Properties
+---
 TBD
 
-## Methods
-
+### Methods
+---
 TBD
 
-## Examples
+### Examples
+---
 
-### C
-
+#### C#
 ```csharp
 using RedOwl.Editor;
 
@@ -50,9 +55,8 @@ namespace RedOwl.Demo
 }
 ```
 
-### UXML
-
-```markup
+#### UXML
+```xml
 <UXML xmlns="UnityEngine.UIElements" xmlns:ue="UnityEditor.UIElements" xmlns:ro="RedOwl.Editor">
     <VisualElement class="container row">
         <ue:ToolbarButton class="container row"><ro:FontAwesome type="solid" icon="fa-chevron-down" width="25" height="25" /></ue:ToolbarButton>
@@ -61,4 +65,3 @@ namespace RedOwl.Demo
     </VisualElement>
 </UXML>
 ```
-

@@ -6,7 +6,7 @@ has_children: true
 permalink: /docs/attributes
 ---
 
-# Attributes
+## Attributes
+---
 
 These are the attributes provided by the framework
-

@@ -4,19 +4,29 @@ title: USS
 parent: Attributes
 ---
 
-# uss
-
-NameUSSNamespaceRedOwl.EditorStatusStable
+<dl>
+  <dt>Name</dt>
+  <dd>USS</dd>
+  <dt>Namespace</dt>
+  <dd>RedOwl.Editor</dd>
+  <dt>Status</dt>
+  <dd><span class="label label-green">Stable</span></dd>
+</dl>
 
 Place any number of these attributes on `RedOwlClasses` and it will load the USS file
 
-> It can only be placed on: classes
+<blockquote class="label bg-grey-dk-100">It can only be placed on: classes</blockquote>
 
-## Parameters
+### Parameters
+---
 
-Pathstring \(default: ""\)
+<dl>
+  <dt>Path</dt>
+  <dd>string (default: "")</dd>
+</dl>
 
-## Examples
+### Examples
+---
 
 If the path given is blank it will build a path from the classes namespace and class name with the suffix `Style`
 
@@ -29,4 +39,3 @@ namespace RedOwl.Demo
     public class DemoElement : RedOwlVisualElement {}
 }
 ```
-

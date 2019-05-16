@@ -4,21 +4,25 @@ title: Editor
 parent: Classes
 ---
 
-# editor
-
-NameRedOwlEditorWindowNamespaceRedOwl.EditorStatusBeta
+<dl>
+  <dt>Name</dt>
+  <dd>RedOwlEditorWindow</dd>
+  <dt>Namespace</dt>
+  <dd>RedOwl.Editor</dd>
+  <dt>Status</dt>
+  <dd><span class="label label-yellow">Beta</span></dd>
+</dl>
 
 This is a standard unity editor class that implements some better default features like automatic change detection and ability to exclude certain properties from being viewed
 
-## Constructors
-
+### Constructors
+---
 TBD
 
-## Fields & Properties
-
+### Fields & Properties
+---
 TBD
 
-## Methods
-
+### Methods
+---
 TBD
-

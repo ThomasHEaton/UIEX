@@ -4,19 +4,31 @@ title: UICallback
 parent: Attributes
 ---
 
-# ui-callback
-
-NameUICallbackNamespaceRedOwl.EditorStatusStable
+<dl>
+  <dt>Name</dt>
+  <dd>UICallback</dd>
+  <dt>Namespace</dt>
+  <dd>RedOwl.Editor</dd>
+  <dt>Status</dt>
+  <dd><span class="label label-green">Stable</span></dd>
+</dl>
 
 Use this attribute on `RedOwlClasses` methods to automatically schedule for callback at certain intervals
 
-> It can only be placed on: methods
+<blockquote class="label bg-grey-dk-100">It can only be placed on: methods</blockquote>
 
-## Parameters
+### Parameters
+---
 
-IntervalintegerOnlyOncebool \(default: false\)
+<dl>
+  <dt>Interval</dt>
+  <dd>integer</dd>
+  <dt>OnlyOnce</dt>
+  <dd>bool (default: false)</dd>
+</dl>
 
-## Examples
+### Examples
+---
 
 The first function's attribute is given a "true" argument which tells the system to only schedule the callback once after the delay given
 
@@ -30,4 +42,3 @@ namespace RedOwl.Demo
     }
 }
 ```
-
