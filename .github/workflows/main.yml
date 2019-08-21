@@ -12,5 +12,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: ls -al
+    - name: Install Unity
+      run: |
+        curl -o "Unity.pkg" "http://netstorage.unity3d.com/unity/b9a993fd1334/MacEditorInstaller/Unity-2018.4.7f1.pkg"
+        sudo installer -dumplog -package Unity.pkg -target /
+        /Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -nographics -silent-crashes -logFile -quit
