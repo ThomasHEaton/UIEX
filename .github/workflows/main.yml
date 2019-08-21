@@ -12,8 +12,3 @@ jobs:
     - run: |
         pwd
         ls -al
-    - container:
-        image: gableroux/unity3d:2018.4.6f1
-      run: |
-        ls -al
-
