@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - uses: red-owl-games/setup-unity@master
+      with:
+        unity-version: 2018.4.6f1
     - run: |
         pwd
         ls -al
