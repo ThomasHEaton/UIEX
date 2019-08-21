@@ -1,5 +1,4 @@
 name: CI
-
 on:
   push:
     branches:
@@ -7,13 +6,14 @@ on:
 
 jobs:
   build:
-
     runs-on: macOS-latest
-    
     steps:
     - uses: actions/checkout@v1
-    - name: Install Unity
+    - run: |
+        pwd
+        ls -al
+    - container:
+        image: gableroux/unity3d:2018.4.6f1
       run: |
-        curl -o "Unity.pkg" "http://netstorage.unity3d.com/unity/b9a993fd1334/MacEditorInstaller/Unity-2018.4.7f1.pkg"
-        sudo installer -dumplog -package Unity.pkg -target /
-        /Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -nographics -silent-crashes -logFile -quit
+        ls -al
+
