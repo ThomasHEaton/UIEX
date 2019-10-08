@@ -11,5 +11,4 @@ jobs:
       with:
         node-version: "10.x"
     - run: |
-        npm login --registry=https://npm.pkg.github.com/
         npm publish
