@@ -3,9 +3,9 @@
   "displayName": "RedOwl - UIEX",
   "version": "1.0.0",
   "description": "UIElementsX (UIEX) is the missing high level API for unity's new UI system.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/red-owl-games/UIEX"
+  "repository" : {
+    "type" : "git",
+    "url": "ssh://git@github.com/red-owl-games/UIEX.git"
   },
   "author": "Kyle Rockman",
   "license": "MIT",
