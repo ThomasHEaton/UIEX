@@ -1,5 +1,5 @@
 {
-  "name": "@red-owl-games/uiex",
+  "name": "com.redowl.uiex",
   "displayName": "RedOwl - UIEX",
   "version": "1.0.0",
   "description": "UIElementsX (UIEX) is the missing high level API for unity's new UI system.",
