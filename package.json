@@ -5,7 +5,7 @@
   "description": "UIElementsX (UIEX) is the missing high level API for unity's new UI system.",
   "repository" : {
     "type" : "git",
-    "url": "https://git@github.com/red-owl-games/UIEX.git"
+    "url": "https://git@github.com/IbakonFerba/UIEX.git"
   },
   "author": "Kyle Rockman",
   "license": "MIT",
